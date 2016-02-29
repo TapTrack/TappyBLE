@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#25A2E8</color>
+    <color name="colorPrimaryDark">#2186CF</color>
+    <color name="colorAccent">#E58F1E</color>
+    <color name="colorError">#F44336</color>
+    <color name="colorErrorTrans">#80F44336</color>
+    <color name="navDivider">#21000000</color>
+    <color name="neutralBackground">@android:color/background_light</color>
+    <color name="mainRecyclerBackground">#f7f7f7</color>
+</resources>

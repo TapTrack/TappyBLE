@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">TappyBLE Demo</string>
+    <string name="tappy_icon">Tappy Icon</string>
+
+    <string name="rationale_ble_coarse_location">Location is needed to receive BLE scan results</string>
+    <string name="bluetooth_must_be_supported">Bluetooth must be supported</string>
+    <string name="bluetooth_must_be_enabled">Bluetooth must be enabled</string>
+    <string name="title_activity_interact_tappy">Tappy BLE</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="start_scan">Start scan</string>
+    <string name="stop_scan">Stop scan</string>
+    <string name="found_device">Found devices</string>
+    <string name="finding_tappies">Searching</string>
+    <string name="tappy_ble">Tappy BLE</string>
+    <string name="active_tappies_heading">Active Tappies</string>
+    <string name="no_active_tappies_caption">No active tappies</string>
+    <string name="saved_tappies_list_heading">Saved Tappies</string>
+    <string name="too_many_tappies_error">Sorry, doesn\'t appear to support that many active tappies</string>
+    <string name="error">Error</string>
+    <string name="find_tappied_menuitem_header">Find Tappies</string>
+    <string name="no_saved_tappies_caption">No saved tappies</string>
+    <string name="tappy_ble_generic_name">TappyBle</string>
+    <string name="actions">Actions</string>
+    <string name="launch_scanned_urls">Launch Scanned URLs</string>
+    <string name="activate_communication">Activate Communication</string>
+    <string name="me_sender">Me</string>
+    <string name="unknown_message_type">Unknown TCMP message</string>
+    <string name="clear_messages_heading">Clear messages</string>
+    <string name="default_content_desc_command_family">Command family button</string>
+    <string name="system_commands_library_title">System Commands</string>
+    <string name="basic_nfc_library_title">Basic NFC</string>
+    <string name="cancel">Cancel</string>
+    <string name="send">Send</string>
+    <string name="timeout_label">Timeout (%1$s)</string>
+    <string name="second_label">%1$ds</string>
+    <string name="infinity_label">Infinite</string>
+    <string name="continuous_mode_label">Continuous Mode</string>
+    <string name="label_message">Message</string>
+    <string name="url_label">Url</string>
+    <string name="url_prepopulate">http://</string>
+    <string name="unsupported_url_prefix">Unsupported url prefix</string>
+    <string name="version_desc_string">Version 3.0.1</string>
+</resources>

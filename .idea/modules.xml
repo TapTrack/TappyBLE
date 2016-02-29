@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TappyBLE.iml" filepath="$PROJECT_DIR$/TappyBLE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TappyBle.iml" filepath="$PROJECT_DIR$/TappyBle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-blescannercompat/tcmp-blescannercompat.iml" filepath="$PROJECT_DIR$/tcmp-blescannercompat/tcmp-blescannercompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-commandfamily-basicnfc/tcmp-commandfamily-basicnfc.iml" filepath="$PROJECT_DIR$/tcmp-commandfamily-basicnfc/tcmp-commandfamily-basicnfc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-commandfamily-common/tcmp-commandfamily-common.iml" filepath="$PROJECT_DIR$/tcmp-commandfamily-common/tcmp-commandfamily-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-commandfamily-system/tcmp-commandfamily-system.iml" filepath="$PROJECT_DIR$/tcmp-commandfamily-system/tcmp-commandfamily-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-commlink-ble/tcmp-commlink-ble.iml" filepath="$PROJECT_DIR$/tcmp-commlink-ble/tcmp-commlink-ble.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-commlink-bleservice/tcmp-commlink-bleservice.iml" filepath="$PROJECT_DIR$/tcmp-commlink-bleservice/tcmp-commlink-bleservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-commlink-common/tcmp-commlink-common.iml" filepath="$PROJECT_DIR$/tcmp-commlink-common/tcmp-commlink-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-hdlc/tcmp-hdlc.iml" filepath="$PROJECT_DIR$/tcmp-hdlc/tcmp-hdlc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-message-common/tcmp-message-common.iml" filepath="$PROJECT_DIR$/tcmp-message-common/tcmp-message-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-tappy-bledevice/tcmp-tappy-bledevice.iml" filepath="$PROJECT_DIR$/tcmp-tappy-bledevice/tcmp-tappy-bledevice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-tappy-constants/tcmp-tappy-constants.iml" filepath="$PROJECT_DIR$/tcmp-tappy-constants/tcmp-tappy-constants.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tcmp-tappyble-scanner/tcmp-tappyble-scanner.iml" filepath="$PROJECT_DIR$/tcmp-tappyble-scanner/tcmp-tappyble-scanner.iml" />
+    </modules>
+  </component>
+</project>

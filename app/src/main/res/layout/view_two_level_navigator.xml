@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016. Papyrus Electronics, Inc
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ you may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/v_two_level_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shadow_top"/>
+    <FrameLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+                 android:layout_centerHorizontal="true"
+        android:layout_below="@+id/v_two_level_shadow">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/familySelectorTopRowHeight"
+            android:background="@color/neutralBackground"
+            android:baselineAligned="false">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/familySelectorItemHeight"
+                android:layout_gravity="bottom|start"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_command_family_selector"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/familySelectorItemHeight"
+                    android:layout_gravity="bottom|start"
+                    android:padding="0dp"/>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="@dimen/familySelectorTopRowHeight"
+                android:layout_height="@dimen/familySelectorTopRowHeight"
+                android:background="#00000000"
+                android:layout_gravity="end|bottom">
+
+                <!-- Squasher used to get around a strange bug/behaviour in the fab widget -->
+                <FrameLayout
+                    android:id="@+id/vg_fab_squasher"
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_height="0dp">
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_repeat_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/ic_refresh_white_24dp"
+                        app:elevation="2dp"
+                        app:fabSize="mini"
+                        />
+                </FrameLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_specific_command_selector"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/neutralBackground"/>
+    </LinearLayout>
+    <io.codetail.widget.RevealFrameLayout
+        android:id="@+id/rfl_reveal_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.commanddetail.CommandDetailView
+        android:id="@+id/cdv_command_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:background="@color/neutralBackground"
+        android:padding="16dp">
+    </com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.commanddetail.CommandDetailView>
+    </io.codetail.widget.RevealFrameLayout>
+    </FrameLayout>
+</merge>
