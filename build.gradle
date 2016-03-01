@@ -27,29 +27,139 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+ext.globalCfg = [
+        minSdkVersion: 18,
+        compileSdkVersion: 23,
+        buildToolsVersion: "23.0.2",
+        projectPublishVersion: "0.1.0"
+]
+
+ext.bintrayCfg = [
+        bintrayScript: rootProject.file('bintray.gradle'),
+
+        bintrayRepo : 'maven',
+        publishedGroupId : 'com.taptrack.tcmptappy',
+
+        publishedArtifacts : [
+                bleService: [
+                        bintrayName : 'tappyble-service',
+                        libraryName : 'TappyBLE Communication',
+                        artifact : 'tappyble-service',
+                        libraryDescription : 'Communication service for TappyBLE communication',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                bleScanner : [
+                        bintrayName : 'tappyble-scanner',
+                        libraryName : 'TappyBLE Scanner',
+                        artifact : 'tappyble-scanner',
+                        libraryDescription : 'Tool to scan for TappyBLEs',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                scannerCompat : [
+                        bintrayName : 'blescannercompat',
+                        libraryName : 'BLE Scanner Compatibility Library Scanner',
+                        artifact : 'blescannercompat',
+                        libraryDescription : 'Compat library for JellyBean/Lollipop BLE APIs',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                systemCommandFamily: [
+                        bintrayName : 'commandfamily-system',
+                        libraryName : 'System TCMP Command Family',
+                        artifact : 'commandfamily-system',
+                        libraryDescription : 'Command family for system-level tappy commands',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                basicNfcCommandFamily: [
+                        bintrayName : 'commandfamily-basicnfc',
+                        libraryName : 'Basic Nfc TCMP Command Family',
+                        artifact : 'commandfamily-basicnfc',
+                        libraryDescription : 'Command family for performing basic NFC operations',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                commonCommandFamily: [
+                        bintrayName : 'commandfamily-common',
+                        libraryName : 'Abstract TCMP Command Family',
+                        artifact : 'commandfamily-common',
+                        libraryDescription : 'Base command family for implementing specific families',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                commlinkCommon: [
+                        bintrayName : 'commlink-common',
+                        libraryName : 'Commlink Common',
+                        artifact : 'commandlink-common',
+                        libraryDescription : 'Common files for TCMP Tappy Communication Links',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                commlinkBle: [
+                        bintrayName : 'commlink-ble',
+                        libraryName : 'Commlink BLE',
+                        artifact : 'commandlink-ble',
+                        libraryDescription : 'Tappy BLE communication link',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                hdlc: [
+                        bintrayName : 'hdlc',
+                        libraryName : 'HDLC',
+                        artifact : 'hdlc',
+                        libraryDescription : 'Tappy BLE HDLC implementation',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                messageCommon: [
+                        bintrayName : 'message-common',
+                        libraryName : 'Message Common',
+                        artifact : 'message-common',
+                        libraryDescription : 'TCMP Tappy common message implementations',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                tappyBleDevice: [
+                        bintrayName : 'tappyble-device',
+                        libraryName : 'TappyBLE Device',
+                        artifact : 'tappyble-device',
+                        libraryDescription : 'Tappy BLE Device',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ],
+                tappyConstants: [
+                        bintrayName : 'tappy-constants',
+                        libraryName : 'Tappy Constants',
+                        artifact : 'tappy-constants',
+                        libraryDescription : 'Constants for TCMP Tappy devices',
+                        libraryVersion : globalCfg.projectPublishVersion
+                ]
+        ],
+
+
+        siteUrl : 'https://github.com/TapTrack/TappyBLE',
+        gitUrl : 'https://github.com/TapTrack/TappyBLE.git',
+
+        developerId : "TapTrack",
+        developerName : "TapTrack",
+        developerEmail : "info@taptrack.com",
+
+        licenseName : 'The Apache Software License, Version 2.0',
+        licenseUrl : "http://www.apache.org/licenses/LICENSE-2.0.txt",
+        allLicenses : ["Apache-2.0"],
+]
 
 ext.libraries = [
-    // android libs
-    androidSupportAnnotations : 'com.android.support:support-annotations:23.1.1',
+        androidSupportAnnotations: "com.android.support:support-annotations:23.1.1",
+        // common libraries
+        tcmpHdlc : project(':hdlc'),
+        tcmpMessage : project(':message-common'),
+        tcmpCommandFamilyCommon : project(':commandfamily-common'),
+        tcmpCommlinkCommon : project(':commlink-common'),
+        tcmpBleScannerCompat : project(':blescannercompat'),
+        tcmpTappyBle : project(':tappy-bledevice'),
+        tcmpTappyConstants : project(':tappy-constants'),
 
-    // common libraries
-    tcmpHdlc : project(':tcmp-hdlc'),
-    tcmpMessage : project(':tcmp-message-common'),
-    tcmpCommandFamilyCommon : project(':tcmp-commandfamily-common'),
-    tcmpCommlinkCommon : project(':tcmp-commlink-common'),
-    tcmpBleScannerCompat : project(':tcmp-blescannercompat'),
-    tcmpTappyBle : project(':tcmp-tappy-bledevice'),
-    tcmpTappyConstants : project(':tcmp-tappy-constants'),
+        // commlinks
+        tcmpCommlinkBle : project(':commlink-ble'),
 
-    // commlinks
-    tcmpCommlinkBle : project(':tcmp-commlink-ble'),
+        tcmpCommlinkBleService : project(':tappyble-service'),
 
-    tcmpCommlinkBleService : project(':tcmp-commlink-bleservice'),
-
-    // command families
-    tcmpSystemCommandFamily : project(':tcmp-commandfamily-system'),
-    tcmpTappyCommandFamily : project(':tcmp-commandfamily-basicnfc'),
+        // command families
+        tcmpSystemCommandFamily : project(':commandfamily-system'),
+        tcmpTappyCommandFamily : project(':commandfamily-basicnfc'),
 
 
-    tcmpTappyBleScanner : project(':tcmp-tappyble-scanner')
+        tcmpTappyBleScanner : project(':tappyble-scanner')
 ]
