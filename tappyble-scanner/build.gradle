@@ -32,12 +32,12 @@ dependencies {
 }
 
 archivesBaseName = bintrayCfg.publishedArtifacts.bleScanner.artifact
-group = bintrayCfg.publishedGroupId
-version = bintrayCfg.publishedArtifacts.bleScanner.libraryVersion
+group = globalCfg.publishedGroupId
+version = globalCfg.publishedVersion
 
 ext {
     bintrayRepo = bintrayCfg.bintrayRepo
-    publishedGroupId = bintrayCfg.publishedGroupId
+    publishedGroupId = group
     siteUrl = bintrayCfg.siteUrl
     gitUrl = bintrayCfg.gitUrl
 
@@ -53,7 +53,8 @@ ext {
     libraryName = bintrayCfg.publishedArtifacts.bleScanner.libraryName
     artifact = bintrayCfg.publishedArtifacts.bleScanner.artifact
     libraryDescription = bintrayCfg.publishedArtifacts.bleScanner.libraryDescription
-    libraryVersion = bintrayCfg.publishedArtifacts.bleScanner.libraryVersion
+    libraryVersion = version
 }
 
+apply from: bintrayCfg.mavenInstallScript
 apply from: bintrayCfg.bintrayScript

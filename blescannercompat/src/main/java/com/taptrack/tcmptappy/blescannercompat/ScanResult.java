@@ -131,9 +131,7 @@ public final class ScanResult implements Parcelable {
                 + mScanRecord.toString() + ", mRssi=" + mRssi + ", mTimestampNanos="
                 + mTimestampNanos + '}';
     }
-    /**
-     * @hide
-     */
+
     public static final Parcelable.Creator<ScanResult> CREATOR = new Creator<ScanResult>() {
         @Override
         public ScanResult createFromParcel(Parcel source) {

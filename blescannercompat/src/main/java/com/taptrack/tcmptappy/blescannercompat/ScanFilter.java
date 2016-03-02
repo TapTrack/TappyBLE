@@ -109,7 +109,6 @@ public final class ScanFilter implements Parcelable {
     /**
      * A {@link android.os.Parcelable.Creator} to create {@link ScanFilter} from parcel.
      *
-     * @hide
      */
     public static final Creator<ScanFilter>
             CREATOR = new Creator<ScanFilter>() {
@@ -171,6 +170,7 @@ public final class ScanFilter implements Parcelable {
     };
     /**
      * Returns the filter set the device name field of Bluetooth advertisement data.
+     * @return device name
      */
     @Nullable
     public String getDeviceName() {
@@ -178,6 +178,7 @@ public final class ScanFilter implements Parcelable {
     }
     /**
      * Returns the filter set on the service uuid.
+     * @return service uuid
      */
     @Nullable
     public ParcelUuid getServiceUuid() {
@@ -206,6 +207,8 @@ public final class ScanFilter implements Parcelable {
     }
     /**
      * Returns the manufacturer id. -1 if the manufacturer filter is not set.
+     *
+     * @return manufacturer id
      */
     public int getManufacturerId() {
         return mManufacturerId;
@@ -221,6 +224,10 @@ public final class ScanFilter implements Parcelable {
     /**
      * Check if the scan filter matches a {@code scanResult}. A scan result is considered as a match
      * if it matches all the field filters.
+     *
+     * @param scanResult Result to check
+     *
+     * @return whether this filter matches the result
      */
     public boolean matches(ScanResult scanResult) {
         if (scanResult == null) {

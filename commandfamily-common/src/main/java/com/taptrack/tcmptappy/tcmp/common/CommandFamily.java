@@ -24,7 +24,7 @@ public interface CommandFamily {
      * decoding sent TCMP messages
      * @param message message to decode, must not be null
      * @return TCMPMessage of explicit type
-     * @throws com.taptrack.tcmptappy.commandfamily.CommandCodeNotSupportedException No command with the messages command code registered in this library
+     * @throws CommandCodeNotSupportedException No command with the messages command code registered in this library
      * @throws MalformedPayloadException Command code valid, but payload is malformed
      */
     com.taptrack.tcmptappy.tcmp.TCMPMessage parseCommand(com.taptrack.tcmptappy.tcmp.TCMPMessage message) throws CommandCodeNotSupportedException, MalformedPayloadException;
@@ -34,7 +34,7 @@ public interface CommandFamily {
      * decoding received TCMP messages
      * @param message message to decode, must not be null
      * @return TCMPMessage of explicit type
-     * @throws com.taptrack.tcmptappy.commandfamily.CommandCodeNotSupportedException No response with the messages response code registered in this library
+     * @throws ResponseCodeNotSupportedException No response with the messages response code registered in this library
      * @throws MalformedPayloadException Response code valid, but payload is malformed
      */
     com.taptrack.tcmptappy.tcmp.TCMPMessage parseResponse(com.taptrack.tcmptappy.tcmp.TCMPMessage message) throws ResponseCodeNotSupportedException, MalformedPayloadException;

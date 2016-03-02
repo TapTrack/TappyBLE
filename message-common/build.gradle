@@ -25,12 +25,12 @@ dependencies {
 }
 
 archivesBaseName = bintrayCfg.publishedArtifacts.messageCommon.artifact
-group = bintrayCfg.publishedGroupId
-version = bintrayCfg.publishedArtifacts.messageCommon.libraryVersion
+group = globalCfg.publishedGroupId
+version = globalCfg.publishedVersion
 
 ext {
     bintrayRepo = bintrayCfg.bintrayRepo
-    publishedGroupId = bintrayCfg.publishedGroupId
+    publishedGroupId = group
     siteUrl = bintrayCfg.siteUrl
     gitUrl = bintrayCfg.gitUrl
 
@@ -46,5 +46,8 @@ ext {
     libraryName = bintrayCfg.publishedArtifacts.messageCommon.libraryName
     artifact = bintrayCfg.publishedArtifacts.messageCommon.artifact
     libraryDescription = bintrayCfg.publishedArtifacts.messageCommon.libraryDescription
-    libraryVersion = bintrayCfg.publishedArtifacts.messageCommon.libraryVersion
+    libraryVersion = version
 }
+
+apply from: bintrayCfg.mavenInstallScript
+apply from: bintrayCfg.bintrayScript

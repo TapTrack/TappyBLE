@@ -147,7 +147,6 @@ public final class ScanRecord {
      *
      * @param scanRecord The scan record of Bluetooth LE advertisement and/or scan response.
      *
-     * @hide
      */
     public static ScanRecord parseFromBytes(byte[] scanRecord) {
         if (scanRecord == null) {

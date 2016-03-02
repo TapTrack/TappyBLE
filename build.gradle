@@ -5,9 +5,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
         classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
@@ -31,99 +32,88 @@ ext.globalCfg = [
         minSdkVersion: 18,
         compileSdkVersion: 23,
         buildToolsVersion: "23.0.2",
-        projectPublishVersion: "0.1.0"
+        publishedVersion: "0.2.0",
+        publishedGroupId : 'com.taptrack.tcmptappy',
 ]
 
 ext.bintrayCfg = [
-        bintrayScript: rootProject.file('bintray.gradle'),
+        mavenInstallScript: rootProject.file('mavenInstaller.gradle'),
+        bintrayScript: rootProject.file('bintrayUpload.gradle'),
 
         bintrayRepo : 'maven',
-        publishedGroupId : 'com.taptrack.tcmptappy',
 
         publishedArtifacts : [
                 bleService: [
                         bintrayName : 'tappyble-service',
                         libraryName : 'TappyBLE Communication',
                         artifact : 'tappyble-service',
-                        libraryDescription : 'Communication service for TappyBLE communication',
-                        libraryVersion : globalCfg.projectPublishVersion
+                        libraryDescription : 'Communication service for TappyBLE communication'
                 ],
                 bleScanner : [
                         bintrayName : 'tappyble-scanner',
                         libraryName : 'TappyBLE Scanner',
                         artifact : 'tappyble-scanner',
                         libraryDescription : 'Tool to scan for TappyBLEs',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 scannerCompat : [
                         bintrayName : 'blescannercompat',
                         libraryName : 'BLE Scanner Compatibility Library Scanner',
                         artifact : 'blescannercompat',
                         libraryDescription : 'Compat library for JellyBean/Lollipop BLE APIs',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 systemCommandFamily: [
                         bintrayName : 'commandfamily-system',
                         libraryName : 'System TCMP Command Family',
                         artifact : 'commandfamily-system',
                         libraryDescription : 'Command family for system-level tappy commands',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 basicNfcCommandFamily: [
                         bintrayName : 'commandfamily-basicnfc',
                         libraryName : 'Basic Nfc TCMP Command Family',
                         artifact : 'commandfamily-basicnfc',
                         libraryDescription : 'Command family for performing basic NFC operations',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 commonCommandFamily: [
                         bintrayName : 'commandfamily-common',
                         libraryName : 'Abstract TCMP Command Family',
                         artifact : 'commandfamily-common',
                         libraryDescription : 'Base command family for implementing specific families',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 commlinkCommon: [
                         bintrayName : 'commlink-common',
                         libraryName : 'Commlink Common',
-                        artifact : 'commandlink-common',
+                        artifact : 'commlink-common',
                         libraryDescription : 'Common files for TCMP Tappy Communication Links',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 commlinkBle: [
                         bintrayName : 'commlink-ble',
                         libraryName : 'Commlink BLE',
-                        artifact : 'commandlink-ble',
+                        artifact : 'commlink-ble',
                         libraryDescription : 'Tappy BLE communication link',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 hdlc: [
                         bintrayName : 'hdlc',
                         libraryName : 'HDLC',
                         artifact : 'hdlc',
                         libraryDescription : 'Tappy BLE HDLC implementation',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 messageCommon: [
                         bintrayName : 'message-common',
                         libraryName : 'Message Common',
                         artifact : 'message-common',
                         libraryDescription : 'TCMP Tappy common message implementations',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 tappyBleDevice: [
                         bintrayName : 'tappyble-device',
                         libraryName : 'TappyBLE Device',
                         artifact : 'tappyble-device',
                         libraryDescription : 'Tappy BLE Device',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ],
                 tappyConstants: [
                         bintrayName : 'tappy-constants',
                         libraryName : 'Tappy Constants',
                         artifact : 'tappy-constants',
                         libraryDescription : 'Constants for TCMP Tappy devices',
-                        libraryVersion : globalCfg.projectPublishVersion
                 ]
         ],
 

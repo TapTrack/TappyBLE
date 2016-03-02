@@ -63,7 +63,6 @@ public final class ScanSettings implements Parcelable {
      * Request abbreviated scan results which contain the device, rssi and scan timestamp.
      * <p><b>Note:</b> It is possible for an application to get more scan results than
      * it asked for, if there are multiple apps using this type.
-     * @hide
      */
     //scan result
     public static final int SCAN_RESULT_TYPE_ABBREVIATED = 1;
@@ -114,9 +113,6 @@ public final class ScanSettings implements Parcelable {
     public int describeContents() {
         return 0;
     }
-    /**
-     * @hide
-     */
     public static final Parcelable.Creator<ScanSettings>
             CREATOR = new Creator<ScanSettings>() {
         @Override
@@ -173,7 +169,6 @@ public final class ScanSettings implements Parcelable {
          *            {@link ScanSettings#SCAN_RESULT_TYPE_FULL} or
          *            {@link ScanSettings#SCAN_RESULT_TYPE_ABBREVIATED}.
          * @throws IllegalArgumentException If the {@code scanResultType} is invalid.
-         * @hide
          */
         //hide
         public Builder setScanResultType(int scanResultType) {
