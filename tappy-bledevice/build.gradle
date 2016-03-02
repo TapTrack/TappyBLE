@@ -27,7 +27,7 @@ android {
 }
 
 dependencies {
-//    compile libraries.tcmpBleScannerCompat
+    compile libraries.tcmpBleScannerCompat
 }
 
 archivesBaseName = bintrayCfg.publishedArtifacts.tappyBleDevice.artifact
