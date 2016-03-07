@@ -11,4 +11,4 @@ compile 'com.taptrack.tcmptappy:commandfamily-system:0.2.0'
 ```
 
 ## Documentation
-Please see the documentation in the wiki for documentation of working with the SDK.
+Please see the documentation in the wiki
