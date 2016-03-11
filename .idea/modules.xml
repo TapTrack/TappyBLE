@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/tappy-constants/tappy-constants.iml" filepath="$PROJECT_DIR$/tappy-constants/tappy-constants.iml" />
       <module fileurl="file://$PROJECT_DIR$/tappyble-scanner/tappyble-scanner.iml" filepath="$PROJECT_DIR$/tappyble-scanner/tappyble-scanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/tappyble-service/tappyble-service.iml" filepath="$PROJECT_DIR$/tappyble-service/tappyble-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tappyble-simplemanager/tappyble-simplemanager.iml" filepath="$PROJECT_DIR$/tappyble-simplemanager/tappyble-simplemanager.iml" />
     </modules>
   </component>
 </project>

@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/tappy-constants" />
             <option value="$PROJECT_DIR$/tappyble-scanner" />
             <option value="$PROJECT_DIR$/tappyble-service" />
+            <option value="$PROJECT_DIR$/tappyble-simplemanager" />
           </set>
         </option>
       </GradleProjectSettings>

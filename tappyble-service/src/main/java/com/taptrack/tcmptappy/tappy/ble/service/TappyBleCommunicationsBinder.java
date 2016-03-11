@@ -20,6 +20,8 @@ import android.os.RemoteException;
 
 import com.taptrack.tcmptappy.tappy.ble.ParcelableTappyBleDeviceDefinition;
 
+import java.util.List;
+
 public class TappyBleCommunicationsBinder extends IBleTappyServiceIPC.Stub {
     private final TappyBleCommunicationsService service;
 
@@ -80,6 +82,11 @@ public class TappyBleCommunicationsBinder extends IBleTappyServiceIPC.Stub {
     @Override
     public void connectDevice(ParcelableTappyBleDeviceDefinition definition) throws RemoteException {
         service.connectDevice(definition);
+    }
+
+    @Override
+    public void setConnectedDevices(List<ParcelableTappyBleDeviceDefinition> devices) throws RemoteException {
+        service.setConnectedDevices(devices);
     }
 
     @Override

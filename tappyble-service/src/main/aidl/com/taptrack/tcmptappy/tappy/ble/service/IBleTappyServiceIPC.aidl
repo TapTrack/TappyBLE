@@ -20,6 +20,8 @@ interface IBleTappyServiceIPC {
    oneway void setOnTappyStatusChangedListener(IBleTappyStatusCallback cb);
    oneway void unregisterOnTappyStatusChangedListener();
 
+    oneway void setConnectedDevices(in List<ParcelableTappyBleDeviceDefinition> devices);
+
     oneway void connectDevice(in ParcelableTappyBleDeviceDefinition definition);
     oneway void disconnectDevice(in ParcelableTappyBleDeviceDefinition definition);
     oneway void disconnectAll();

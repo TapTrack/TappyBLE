@@ -32,7 +32,9 @@ import com.taptrack.tcmptappy.tappy.ble.TappyBleDeviceDefinition;
 import com.taptrack.tcmptappy.tappy.ble.TappyBleDeviceStatus;
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -54,6 +56,7 @@ public class TappyBleCommunicationsService extends Service {
     private AtomicReference<IBleTappyMessageCallback> receivedCallbackRef = new AtomicReference<>();
     private AtomicReference<IBleTappyMessageCallback> unparsableCallbackRef = new AtomicReference<>();
     private AtomicReference<IBleTappyStatusCallback> statusCallbackRef= new AtomicReference<>();
+
 
     protected static final class CommunicatorHolder {
         private final TappyBleCommunicator communicator;
@@ -126,8 +129,48 @@ public class TappyBleCommunicationsService extends Service {
         statusCallbackRef.set(cb);
     }
 
-    public void connectDevice(ParcelableTappyBleDeviceDefinition definition) {
+    public void setConnectedDevices(List<ParcelableTappyBleDeviceDefinition> devices) {
         connectionsEditLock.lock();
+        Map<String,ParcelableTappyBleDeviceDefinition> newSet = new HashMap<>(devices.size());
+        for(ParcelableTappyBleDeviceDefinition defintion : devices) {
+            newSet.put(defintion.getAddress(),defintion);
+        }
+
+        // first we disconnect all the devices not in the new set
+        Iterator<Map.Entry<String,CommunicatorHolder>> communicatorIterator = communicatorHolderMap.entrySet().iterator();
+        while(communicatorIterator.hasNext()) {
+            Map.Entry<String,CommunicatorHolder> item = communicatorIterator.next();
+            if(!newSet.containsKey(item.getKey())) {
+                TappyBleCommunicator communicator = item.getValue().getCommunicator();
+                TappyBleDeviceDefinition deviceDefinition = item.getValue().getDeviceDefinition();
+
+                communicatorIterator.remove();
+
+                communicator.close();
+
+                IBleTappyStatusCallback statusCallback = statusCallbackRef.get();
+                if (statusCallback != null) {
+                    try {
+                        statusCallback.onTappyBleStatus(new ParcelableTappyBleDeviceDefinition(deviceDefinition),
+                                TappyBleDeviceStatus.DISCONNECTED);
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "Error on informing of tappy disconnection", e);
+                    }
+                }
+            }
+        }
+
+        // now we connect to the new devices
+        Iterator<Map.Entry<String,ParcelableTappyBleDeviceDefinition>> holderIt = newSet.entrySet().iterator();
+        while(holderIt.hasNext()) {
+            Map.Entry<String,ParcelableTappyBleDeviceDefinition> item = holderIt.next();
+            unsafeConnectDevice(item.getValue());
+        }
+
+        connectionsEditLock.unlock();
+    }
+
+    private void unsafeConnectDevice(ParcelableTappyBleDeviceDefinition definition) {
         CommunicatorHolder oldCommunicatorHolder = communicatorHolderMap.get(definition.getAddress());
         if(oldCommunicatorHolder == null) {
             TappyBleCommunicator newCommunicator = new TappyBleCommunicator(getApplicationContext(), definition);
@@ -154,6 +197,11 @@ public class TappyBleCommunicationsService extends Service {
                 oldCommunicator.connect();
             }
         }
+    }
+
+    public void connectDevice(ParcelableTappyBleDeviceDefinition definition) {
+        connectionsEditLock.lock();
+        unsafeConnectDevice(definition);
         connectionsEditLock.unlock();
     }
 
