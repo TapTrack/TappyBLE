@@ -14,11 +14,11 @@ interface IBleTappyServiceIPC {
     oneway void setUnparsableMessageReceivedCallback(IBleTappyMessageCallback callback);
     oneway void unregisterUnparsableMessageReceivedCallback();
 
-   //using this name due to aidl limitations on overloading
-   int getTappyStatusSync(in ParcelableTappyBleDeviceDefinition definition);
-   oneway void getTappyStatus(in ParcelableTappyBleDeviceDefinition definition, IBleTappyStatusCallback cb);
-   oneway void setOnTappyStatusChangedListener(IBleTappyStatusCallback cb);
-   oneway void unregisterOnTappyStatusChangedListener();
+    //using this name due to aidl limitations on overloading
+    int getTappyStatusSync(in ParcelableTappyBleDeviceDefinition definition);
+    oneway void getTappyStatus(in ParcelableTappyBleDeviceDefinition definition, IBleTappyStatusCallback cb);
+    oneway void setOnTappyStatusChangedListener(IBleTappyStatusCallback cb);
+    oneway void unregisterOnTappyStatusChangedListener();
 
     oneway void setConnectedDevices(in List<ParcelableTappyBleDeviceDefinition> devices);
 

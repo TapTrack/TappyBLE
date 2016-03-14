@@ -55,6 +55,7 @@ ext {
     libraryDescription = bintrayCfg.publishedArtifacts.basicNfcCommandFamily.libraryDescription
     libraryVersion = version
 }
-
-apply from: bintrayCfg.mavenInstallScript
-apply from: bintrayCfg.bintrayScript
+// removing deployment code pending module removal
+// basicnfc command family is now its own project
+// apply from: bintrayCfg.mavenInstallScript
+// apply from: bintrayCfg.bintrayScript

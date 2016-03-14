@@ -154,7 +154,7 @@ ext.libraries = [
 
         // command families
         tcmpSystemCommandFamily : project(':commandfamily-system'),
-        tcmpTappyCommandFamily : project(':commandfamily-basicnfc'),
+        tcmpTappyCommandFamily : "com.taptrack.tcmptappy:commandfamily-basicnfc:0.5.0",
 
 
         tcmpTappyBleScanner : project(':tappyble-scanner')
