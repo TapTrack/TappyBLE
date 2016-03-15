@@ -16,6 +16,7 @@
 
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands;
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage;
 
 public class SetConfigItemCommand extends AbstractSystemMessage {
@@ -29,11 +30,12 @@ public class SetConfigItemCommand extends AbstractSystemMessage {
     }
 
     public SetConfigItemCommand(byte[] payload) {
-        if(payload.length != 2)
-            throw new IllegalArgumentException("Payload malformed");
-
-        this.parameter = payload[0];
-        this.value = payload[1];
+        this();
+        try {
+            parsePayload(payload);
+        } catch (MalformedPayloadException e) {
+            e.printStackTrace();
+        }
     }
 
     public SetConfigItemCommand(byte parameter, byte value) {
@@ -55,6 +57,15 @@ public class SetConfigItemCommand extends AbstractSystemMessage {
 
     public void setValue(byte value) {
         this.value = value;
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+        if(payload.length != 2)
+            throw new IllegalArgumentException("Payload malformed");
+
+        this.parameter = payload[0];
+        this.value = payload[1];
     }
 
     @Override

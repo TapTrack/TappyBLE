@@ -16,6 +16,7 @@
 
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands;
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage;
 
 public class GetHardwareVersionCommand extends AbstractSystemMessage {
@@ -24,6 +25,11 @@ public class GetHardwareVersionCommand extends AbstractSystemMessage {
     public GetHardwareVersionCommand() {}
 
     public GetHardwareVersionCommand(byte[] payload) {
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+
     }
 
     @Override

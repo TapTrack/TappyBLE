@@ -41,6 +41,11 @@ public class HardwareVersionResponse extends com.taptrack.tcmptappy.tcmp.command
     }
 
     public HardwareVersionResponse(byte[] payload) throws MalformedPayloadException {
+        parsePayload(payload);
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
         if(payload.length != 2)
             throw new MalformedPayloadException();
 

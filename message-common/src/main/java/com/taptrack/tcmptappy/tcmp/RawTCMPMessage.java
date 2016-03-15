@@ -42,6 +42,11 @@ public class RawTCMPMessage extends TCMPMessage {
     }
 
     @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+        this.mPayload = payload;
+    }
+
+    @Override
     public byte[] getPayload() {
         return mPayload;
     }

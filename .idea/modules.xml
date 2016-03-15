@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/TappyBLE.iml" filepath="$PROJECT_DIR$/TappyBLE.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/blescannercompat/blescannercompat.iml" filepath="$PROJECT_DIR$/blescannercompat/blescannercompat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commandfamily-basicnfc/commandfamily-basicnfc.iml" filepath="$PROJECT_DIR$/commandfamily-basicnfc/commandfamily-basicnfc.iml" />
       <module fileurl="file://$PROJECT_DIR$/commandfamily-common/commandfamily-common.iml" filepath="$PROJECT_DIR$/commandfamily-common/commandfamily-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/commandfamily-system/commandfamily-system.iml" filepath="$PROJECT_DIR$/commandfamily-system/commandfamily-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/commlink-ble/commlink-ble.iml" filepath="$PROJECT_DIR$/commlink-ble/commlink-ble.iml" />

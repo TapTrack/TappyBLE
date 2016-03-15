@@ -16,6 +16,7 @@
 
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses;
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage;
 
 public class GetBatteryLevelResponse extends AbstractSystemMessage {
@@ -43,6 +44,12 @@ public class GetBatteryLevelResponse extends AbstractSystemMessage {
 
     public int getBatteryLevelPercent() {
         return (batteryLevel & 0xFF);
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+        if(payload.length != 1) throw new MalformedPayloadException("Payload too short");
+        batteryLevel = payload[0];
     }
 
     @Override

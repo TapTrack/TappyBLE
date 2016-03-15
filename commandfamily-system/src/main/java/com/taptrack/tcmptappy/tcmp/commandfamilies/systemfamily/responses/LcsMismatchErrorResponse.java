@@ -17,12 +17,19 @@
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses;
 
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
+
 public class LcsMismatchErrorResponse extends com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage {
     public static final byte COMMAND_CODE = 0x02;
 
     public LcsMismatchErrorResponse() {}
 
     public LcsMismatchErrorResponse(byte[] payload) {
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+
     }
 
     @Override

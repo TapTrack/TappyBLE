@@ -26,6 +26,11 @@ public class FirmwareVersionResponse extends AbstractSystemMessage {
     }
 
     public FirmwareVersionResponse(byte[] payload) throws MalformedPayloadException {
+        parsePayload(payload);
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
         if(payload.length != 2)
             throw new MalformedPayloadException();
 

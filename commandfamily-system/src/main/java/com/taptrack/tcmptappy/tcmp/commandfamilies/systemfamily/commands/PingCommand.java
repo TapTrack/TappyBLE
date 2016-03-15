@@ -16,6 +16,7 @@
 
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands;
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage;
 
 public class PingCommand extends AbstractSystemMessage {
@@ -24,6 +25,11 @@ public class PingCommand extends AbstractSystemMessage {
     public PingCommand() {}
 
     public PingCommand(byte[] payload) {
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+
     }
 
     @Override

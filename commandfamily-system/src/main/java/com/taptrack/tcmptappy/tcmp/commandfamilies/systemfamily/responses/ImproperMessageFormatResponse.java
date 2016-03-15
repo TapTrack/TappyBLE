@@ -16,6 +16,7 @@
 
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses;
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage;
 
 public class ImproperMessageFormatResponse extends AbstractSystemMessage {
@@ -24,6 +25,11 @@ public class ImproperMessageFormatResponse extends AbstractSystemMessage {
     public ImproperMessageFormatResponse() {}
 
     public ImproperMessageFormatResponse(byte[] payload) {
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+
     }
 
     @Override

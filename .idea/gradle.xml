@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/blescannercompat" />
-            <option value="$PROJECT_DIR$/commandfamily-basicnfc" />
             <option value="$PROJECT_DIR$/commandfamily-common" />
             <option value="$PROJECT_DIR$/commandfamily-system" />
             <option value="$PROJECT_DIR$/commlink-ble" />

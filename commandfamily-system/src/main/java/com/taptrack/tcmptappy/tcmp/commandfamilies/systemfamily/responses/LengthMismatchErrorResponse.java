@@ -16,6 +16,7 @@
 
 package com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses;
 
+import com.taptrack.tcmptappy.tcmp.MalformedPayloadException;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.AbstractSystemMessage;
 
 public class LengthMismatchErrorResponse extends AbstractSystemMessage {
@@ -24,6 +25,11 @@ public class LengthMismatchErrorResponse extends AbstractSystemMessage {
     public LengthMismatchErrorResponse() {}
 
     public LengthMismatchErrorResponse(byte[] payload) {
+    }
+
+    @Override
+    public void parsePayload(byte[] payload) throws MalformedPayloadException {
+
     }
 
     @Override

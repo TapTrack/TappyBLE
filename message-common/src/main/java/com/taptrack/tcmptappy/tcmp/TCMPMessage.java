@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public abstract class TCMPMessage {
+    public abstract void parsePayload(byte[] payload) throws MalformedPayloadException;
 
     public abstract byte[] getPayload();
 
