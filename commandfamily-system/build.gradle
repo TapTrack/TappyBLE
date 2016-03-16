@@ -56,5 +56,5 @@ ext {
     libraryVersion = version
 }
 
-apply from: bintrayCfg.mavenInstallScript
-apply from: bintrayCfg.bintrayScript
+//apply from: bintrayCfg.mavenInstallScript
+//apply from: bintrayCfg.bintrayScript
