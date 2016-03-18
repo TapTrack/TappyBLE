@@ -35,57 +35,45 @@ import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taptrack.tappyble.R;
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.commanddetail.CommandDetailViewAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.DetailAdapterCommand;
+import com.taptrack.tcmptappy.utils.ByteUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 
-public class UrlCommandAdapter implements CommandDetailViewAdapter {
-    public interface UrlCommand extends DetailAdapterCommand {
-        TCMPMessage getMessage(byte timeout, String uri);
-        boolean isUserInError(byte timeout, String uri);
+public class HexCommandAdapter implements CommandDetailViewAdapter {
+    public interface HexCommand extends DetailAdapterCommand {
+        TCMPMessage getMessage(byte[] hex);
     }
-    String infiniteLabel;
-    String secondLabel;
+    private static final String KEY_HEX_CONTENT = "KEY_URL";
 
-    private static final String KEY_URL_CONTENT = "KEY_URL";
-    private static final String KEY_PROGRESS = "KEY_PROGRESS";
+    private HexCommand command;
 
-    private UrlCommand command;
-
-    public UrlCommandAdapter(UrlCommand item) {
+    public HexCommandAdapter(HexCommand item) {
         this.command = item;
     }
 
     @Override
     public void storeTransientDataToBundle(ViewGroup parameterParent,Bundle bundle) {
         EditText editText = ButterKnife.findById(parameterParent,R.id.et_text);
-        SeekBar seekBar = ButterKnife.findById(parameterParent,R.id.seeker_polling_time);
 
         if(editText != null)
-            bundle.putString(KEY_URL_CONTENT,editText.getText().toString());
+            bundle.putString(KEY_HEX_CONTENT, editText.getText().toString());
 
-        if(seekBar != null)
-            bundle.putInt(KEY_PROGRESS,seekBar.getProgress());
     }
 
     @Override
     public void restoreTransientDataFromBundle(ViewGroup parameterParent,Bundle bundle) {
         EditText editText = ButterKnife.findById(parameterParent,R.id.et_text);
-        SeekBar seekBar = ButterKnife.findById(parameterParent,R.id.seeker_polling_time);
-        if(bundle.containsKey(KEY_URL_CONTENT) && editText != null) {
-            editText.setText(bundle.getString(KEY_URL_CONTENT,
-                    parameterParent.getContext().getString(R.string.url_prepopulate)));
-        }
-
-        if(bundle.containsKey(KEY_PROGRESS) && seekBar != null) {
-            seekBar.setProgress(bundle.getInt(KEY_PROGRESS));
+        if(bundle.containsKey(KEY_HEX_CONTENT) && editText != null) {
+            editText.setText(bundle.getString(KEY_HEX_CONTENT, ""));
         }
     }
 
@@ -102,36 +90,12 @@ public class UrlCommandAdapter implements CommandDetailViewAdapter {
     @Override
     public void attachParameterView(ViewGroup parent) {
         Context ctx = parent.getContext();
-        secondLabel = ctx.getString(R.string.second_label);
-        infiniteLabel = ctx.getString(R.string.infinity_label);
 
         LayoutInflater inflater =LayoutInflater.from(ctx);
-        View v = inflater.inflate(R.layout.command_options_send_text, parent);
-
-        final TextView timeOutLabel = ButterKnife.findById(v, R.id.tv_label_timeout);
-        SeekBar seekBar = ButterKnife.findById(v,R.id.seeker_polling_time);
-
-        int currentValue = seekBar.getProgress();
-        setTimeoutLabelForValue(timeOutLabel, currentValue);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                setTimeoutLabelForValue(timeOutLabel, progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+        View v = inflater.inflate(R.layout.command_options_send_hex, parent);
 
         final TextInputLayout til = ButterKnife.findById(v,R.id.til_text_holder);
-        til.setError(ctx.getString(R.string.unsupported_url_prefix));
+        til.setError(ctx.getString(R.string.error_command_must_be_hex));
         EditText text = ButterKnife.findById(v,R.id.et_text);
         text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -155,28 +119,19 @@ public class UrlCommandAdapter implements CommandDetailViewAdapter {
 
     }
 
-
-    private void setTimeoutLabelForValue(TextView view, int value) {
-        view.setText(String.format(view.getContext().getString(R.string.timeout_label), getStringForValue(value)));
-    }
-
-    private String getStringForValue(int currentValue) {
-        if(currentValue == 10) {
-            return infiniteLabel;
-        }
-        else {
-            return String.format(secondLabel,(currentValue + 1));
-        }
-    }
-
+    Pattern p = Pattern.compile("[0-9a-fA-F]+");
     private boolean isTextValid(String rawText) {
-        String text = rawText.toLowerCase();
-        return text.startsWith("http://") ||
-                text.startsWith("https://") ||
-                text.startsWith("http://www.") ||
-                text.startsWith("https://www.") ||
-                text.startsWith("tel:") ||
-                text.startsWith("mailto:");
+        if(rawText == null)
+            return false;
+        if(rawText.length() == 0)
+            return false;
+        if(rawText.length() % 2 != 0)
+            return false;
+        Matcher m = p.matcher(rawText);
+        if(m.matches())
+            return true;
+        else
+            return false;
     }
 
     private void emphasizeUserError(ViewGroup v) {
@@ -223,17 +178,14 @@ public class UrlCommandAdapter implements CommandDetailViewAdapter {
     public TCMPMessage userDesiresSend(View parameterViewParent) {
         TextInputLayout til = ButterKnife.findById(parameterViewParent,R.id.til_text_holder);
         EditText editText = ButterKnife.findById(parameterViewParent,R.id.et_text);
-        SeekBar seekBar = ButterKnife.findById(parameterViewParent,R.id.seeker_polling_time);
 
         String text = editText.getText().toString().toLowerCase();
-        int timeValue = seekBar.getProgress() + 1;
-        timeValue = timeValue == 11 ? 0: timeValue;
 
-        if(command.isUserInError((byte) timeValue,text)) {
+        if(!isTextValid(text)) {
             emphasizeUserError(til);
         }
         else {
-            return command.getMessage((byte) timeValue,text);
+            return command.getMessage(ByteUtils.hexStringToByteArray(text));
         }
 
         return null;

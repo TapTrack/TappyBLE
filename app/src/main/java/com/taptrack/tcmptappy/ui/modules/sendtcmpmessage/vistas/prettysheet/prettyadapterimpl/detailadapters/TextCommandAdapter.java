@@ -28,20 +28,25 @@ import android.widget.TextView;
 
 import com.taptrack.tappyble.R;
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.WriteNdefTextRecordCommand;
-import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.CommandItem;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.commanddetail.CommandDetailViewAdapter;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.DetailAdapterCommand;
 
 import butterknife.ButterKnife;
 
-public class TextCommandAdapter extends NoParameterAdapter {
+public class TextCommandAdapter implements CommandDetailViewAdapter {
+    public interface TextCommand extends DetailAdapterCommand {
+        TCMPMessage getMessage(byte timeout, String text);
+    }
     String infiniteLabel;
     String secondLabel;
 
     private static final String KEY_TEXT_CONTENT = "KEY_TEXT";
     private static final String KEY_PROGRESS = "KEY_PROGRESS";
 
-    public TextCommandAdapter(CommandItem item) {
-        super(item);
+    private TextCommand command;
+
+    public TextCommandAdapter(TextCommand command) {
+        this.command = command;
     }
 
     @Override
@@ -67,6 +72,16 @@ public class TextCommandAdapter extends NoParameterAdapter {
         if(bundle.containsKey(KEY_PROGRESS) && seekBar != null) {
             seekBar.setProgress(bundle.getInt(KEY_PROGRESS));
         }
+    }
+
+    @Override
+    public int getTitleRes() {
+        return command.getItem().getTitleRes();
+    }
+
+    @Override
+    public int getDescriptionRes() {
+        return command.getItem().getDescriptionRes();
     }
 
     @Override
@@ -125,6 +140,6 @@ public class TextCommandAdapter extends NoParameterAdapter {
         int timeValue = seekBar.getProgress() + 1;
         timeValue = timeValue == 11 ? 0: timeValue;
 
-        return new WriteNdefTextRecordCommand((byte) timeValue,false,text.getBytes());
+        return command.getMessage((byte) timeValue,text);
     }
 }

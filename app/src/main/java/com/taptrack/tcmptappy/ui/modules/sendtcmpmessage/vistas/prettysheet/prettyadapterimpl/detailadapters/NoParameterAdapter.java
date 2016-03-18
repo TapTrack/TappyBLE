@@ -22,21 +22,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.GetBasicNfcLibraryVersionCommand;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.StopCommand;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands.GetBatteryLevelCommand;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands.GetHardwareVersionCommand;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands.GetFirmwareVersionCommand;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.commands.PingCommand;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.commanddetail.CommandDetailViewAdapter;
-import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.CommandItem;
-import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.DefaultPrettySheetAdapter;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.DetailAdapterCommand;
 
 public class NoParameterAdapter implements CommandDetailViewAdapter {
-    protected final CommandItem item;
+    public interface NoParameterCommand extends DetailAdapterCommand {
+        TCMPMessage getMessage();
+    }
+    protected final NoParameterCommand command;
 
-    public NoParameterAdapter(CommandItem item) {
-        this.item = item;
+    public NoParameterAdapter(NoParameterCommand command) {
+        this.command = command;
     }
 
     @Override
@@ -51,12 +47,12 @@ public class NoParameterAdapter implements CommandDetailViewAdapter {
 
     @Override
     public int getTitleRes() {
-        return item.getTitleRes();
+        return command.getItem().getTitleRes();
     }
 
     @Override
     public int getDescriptionRes() {
-        return item.getDescriptionRes();
+        return command.getItem().getDescriptionRes();
     }
 
     @Override
@@ -66,20 +62,6 @@ public class NoParameterAdapter implements CommandDetailViewAdapter {
     @Nullable
     @Override
     public TCMPMessage userDesiresSend(View parameterViewParent) {
-        switch(item.getCommandType()) {
-            case DefaultPrettySheetAdapter.KEY_SYS_LIBV:
-                return new GetFirmwareVersionCommand();
-            case DefaultPrettySheetAdapter.KEY_BATT:
-                return new GetBatteryLevelCommand();
-            case DefaultPrettySheetAdapter.KEY_HARDV:
-                return new GetHardwareVersionCommand();
-            case DefaultPrettySheetAdapter.KEY_PING:
-                return new PingCommand();
-            case DefaultPrettySheetAdapter.KEY_NFC_LIBV:
-                return new GetBasicNfcLibraryVersionCommand();
-            case DefaultPrettySheetAdapter.KEY_STOP:
-                return new StopCommand();
-        }
-        return null;
+        return command.getMessage();
     }
 }

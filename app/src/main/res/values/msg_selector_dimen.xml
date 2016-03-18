@@ -19,7 +19,7 @@
     <dimen name="familySelectorTopRowHeight">64dp</dimen>
     <dimen name="familySelectorIconDimen">24dp</dimen>
     <dimen name="familySelectorItemHeight">40dp</dimen>
-    <dimen name="familySelectorItemWidth">48dp</dimen>
+    <dimen name="familySelectorItemWidth">44dp</dimen>
     <dimen name="familySelectorUnderlineHeight">4dp</dimen>
 
     <dimen name="commandSelectorExpandedHeight">272dp</dimen>

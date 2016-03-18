@@ -153,8 +153,10 @@ ext.libraries = [
         tcmpCommlinkBleService : project(':tappyble-service'),
 
         // command families
-        tcmpSystemCommandFamily : project(':commandfamily-system'),
-        tcmpTappyCommandFamily : "com.taptrack.tcmptappy:commandfamily-basicnfc:0.5.0",
+        tcmpSystemCommandFamily : "com.taptrack.tcmptappy:commandfamily-system:0.8.0",
+        tcmpTappyCommandFamily : "com.taptrack.tcmptappy:commandfamily-basicnfc:0.7.1",
+        tcmpClassicCommandFamily : "com.taptrack.tcmptappy:commandfamily-mifareclassic:0.3.0",
+        tcmpType4CommandFamily : "com.taptrack.tcmptappy:commandfamily-type4:0.2.0",
 
 
         tcmpTappyBleScanner : project(':tappyble-scanner')

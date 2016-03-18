@@ -18,6 +18,8 @@ package com.taptrack.tcmptappy.domain.messagepersistence;
 
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.taptrack.tcmptappy.application.AppModule;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.MifareClassicCommandLibrary;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.Type4CommandLibrary;
 import com.taptrack.tcmptappy.tcmp.common.CommandFamilyMessageResolver;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.SystemCommandLibrary;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.BasicNfcCommandLibrary;
@@ -39,6 +41,8 @@ public class MessagePersistenceModule {
         CommandFamilyMessageResolver messageResolver = new CommandFamilyMessageResolver();
         messageResolver.registerCommandLibrary(new BasicNfcCommandLibrary());
         messageResolver.registerCommandLibrary(new SystemCommandLibrary());
+        messageResolver.registerCommandLibrary(new MifareClassicCommandLibrary());
+        messageResolver.registerCommandLibrary(new Type4CommandLibrary());
         return messageResolver;
     }
 

@@ -19,7 +19,6 @@ package com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.pre
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,29 +32,25 @@ import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.pret
 
 import butterknife.ButterKnife;
 
-public class ScanCommandAdapter implements CommandDetailViewAdapter {
-    public interface TimeoutContinuousCommand extends DetailAdapterCommand {
-        TCMPMessage getMessage(byte timeout, boolean isContinuous);
+public class TimeoutCommandAdapter implements CommandDetailViewAdapter {
+    public interface TimeoutCommand extends DetailAdapterCommand {
+        TCMPMessage getMessage(byte timeout);
     }
+
     String infiniteLabel;
     String secondLabel;
 
-    private static final String KEY_CONTINUOUS = "KEY_CONTINUOUS";
     private static final String KEY_PROGRESS = "KEY_PROGRESS";
 
-    TimeoutContinuousCommand command;
+    protected TimeoutCommand command;
 
-    public ScanCommandAdapter(TimeoutContinuousCommand command) {
+    public TimeoutCommandAdapter(TimeoutCommand command) {
         this.command = command;
     }
 
     @Override
     public void storeTransientDataToBundle(ViewGroup parameterParent,Bundle bundle) {
-        SwitchCompat continuous = ButterKnife.findById(parameterParent,R.id.sw_continuous);
         SeekBar seekBar = ButterKnife.findById(parameterParent,R.id.seeker_polling_time);
-
-        if(continuous != null)
-            bundle.putBoolean(KEY_CONTINUOUS,continuous.isChecked());
 
         if(seekBar != null)
             bundle.putInt(KEY_PROGRESS,seekBar.getProgress());
@@ -63,12 +58,7 @@ public class ScanCommandAdapter implements CommandDetailViewAdapter {
 
     @Override
     public void restoreTransientDataFromBundle(ViewGroup parameterParent,Bundle bundle) {
-        SwitchCompat continuous = ButterKnife.findById(parameterParent,R.id.sw_continuous);
         SeekBar seekBar = ButterKnife.findById(parameterParent,R.id.seeker_polling_time);
-
-        if(bundle.containsKey(KEY_CONTINUOUS) && continuous != null) {
-            continuous.setChecked(bundle.getBoolean(KEY_CONTINUOUS));
-        }
 
         if(bundle.containsKey(KEY_PROGRESS) && seekBar != null) {
             seekBar.setProgress(bundle.getInt(KEY_PROGRESS));
@@ -92,7 +82,7 @@ public class ScanCommandAdapter implements CommandDetailViewAdapter {
         infiniteLabel = ctx.getString(R.string.infinity_label);
 
         LayoutInflater inflater =LayoutInflater.from(ctx);
-        View v = inflater.inflate(R.layout.command_options_scan, parent);
+        View v = inflater.inflate(R.layout.command_options_detect, parent);
 
         final TextView timeOutLabel = ButterKnife.findById(v, R.id.tv_label_timeout);
         SeekBar seekBar = ButterKnife.findById(v,R.id.seeker_polling_time);
@@ -133,14 +123,11 @@ public class ScanCommandAdapter implements CommandDetailViewAdapter {
     @Nullable
     @Override
     public TCMPMessage userDesiresSend(View parameterViewParent) {
-        SwitchCompat continuousSwitch = ButterKnife.findById(parameterViewParent,R.id.sw_continuous);
-        SeekBar seekBar = ButterKnife.findById(parameterViewParent,R.id.seeker_polling_time);
+        SeekBar seekBar = ButterKnife.findById(parameterViewParent, R.id.seeker_polling_time);
 
-        boolean isContinuous = continuousSwitch.isChecked();
         int timeValue = seekBar.getProgress() + 1;
         timeValue = timeValue == 11 ? 0: timeValue;
 
-
-        return command.getMessage((byte)timeValue,isContinuous);
+        return command.getMessage((byte) timeValue);
     }
 }

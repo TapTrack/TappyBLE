@@ -52,6 +52,7 @@ import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.NdefFoundR
 import com.taptrack.tcmptappy.tcmp.common.CommandFamilyMessageResolver;
 import com.taptrack.tcmptappy.tcmp.common.FamilyCodeNotSupportedException;
 import com.taptrack.tcmptappy.tcmp.common.ResponseCodeNotSupportedException;
+import com.taptrack.tcmptappy.utils.ByteUtils;
 import com.taptrack.tcmptappy.utils.TimberSubscriber;
 
 import java.lang.ref.WeakReference;
@@ -218,15 +219,18 @@ public class TappyManagementBgService extends Service {
     }
 
     protected void onTappyMessageReceived(ParcelableTappyBleDeviceDefinition device, byte[] message) {
-        long time = System.currentTimeMillis();
-        SavedTcmpMessage savedTcmpMessage = new SavedTcmpMessage(device.getName(), device.getAddress(), time, message);
-        contentResolver.put()
-                .object(savedTcmpMessage)
-                .prepare()
-                .asRxObservable()
-                .subscribe(new UnsubscribeOnNextSubscriber<PutResult>());
         try {
-            TCMPMessage parsed = resolver.parseResponse(new RawTCMPMessage(message));
+            RawTCMPMessage rawTCMPMessage = new RawTCMPMessage(message);
+            String payload = ByteUtils.bytesToHex(rawTCMPMessage.getPayload());
+            long time = System.currentTimeMillis();
+            SavedTcmpMessage savedTcmpMessage = new SavedTcmpMessage(device.getName(), device.getAddress(), time, message);
+            contentResolver.put()
+                    .object(savedTcmpMessage)
+                    .prepare()
+                    .asRxObservable()
+                    .subscribe(new UnsubscribeOnNextSubscriber<PutResult>());
+
+            TCMPMessage parsed = resolver.parseResponse(rawTCMPMessage);
             if(parsed instanceof NdefFoundResponse && launchNdef.get()) {
                     checkUrlAndLaunch((NdefFoundResponse) parsed);
             }
@@ -397,7 +401,7 @@ public class TappyManagementBgService extends Service {
     }
 
     private void checkUrlAndLaunch(NdefFoundResponse parsed) {
-        NdefMessage m = (parsed).getNdefMessage();
+        NdefMessage m = (parsed).getMessage();
         NdefRecord[] records = m.getRecords();
         if (records.length != 0) {
             NdefRecord firstRecord = records[0];

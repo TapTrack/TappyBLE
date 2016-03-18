@@ -77,6 +77,8 @@ dependencies {
     compile libraries.tcmpCommlinkBleService
     compile libraries.tcmpSystemCommandFamily
     compile libraries.tcmpTappyCommandFamily
+    compile libraries.tcmpClassicCommandFamily
+    compile libraries.tcmpType4CommandFamily
     compile libraries.tcmpCommandFamilyCommon
     compile libraries.tcmpBleScannerCompat
     compile libraries.tcmpTappyBleScanner

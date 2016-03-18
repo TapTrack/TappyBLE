@@ -22,8 +22,8 @@
     <string name="syscommand_get_hardware_description">Request the hardware version of the Tappy</string>
     <string name="syscommand_get_battery_title">Battery Level</string>
     <string name="syscommand_get_battery_description">Request the battery level of the Tappy</string>
-    <string name="syscommand_get_libraryv_title">Library Version</string>
-    <string name="syscommand_get_libraryv_description">Request the version of the system library</string>
+    <string name="syscommand_get_libraryv_title">Firmware Version</string>
+    <string name="syscommand_get_libraryv_description">Request the version of the firmware</string>
 
     <string name="nfccommand_get_libraryv_title">Library Version</string>
     <string name="nfccommand_get_libraryv_description">Request the version of the basic NFC library</string>
@@ -37,4 +37,19 @@
     <string name="nfccommand_write_text_description">Command the Tappy to write text to tags</string>
     <string name="nfccommand_write_uri_title">Write Url</string>
     <string name="nfccommand_write_uri_description">Command the Tappy to write a link to tags</string>
+
+    <string name="classiccommand_detect_title">Detect Classic</string>
+    <string name="classiccommand_detect_description">Scan for a MIFARE Classic</string>
+    <string name="classiccommand_get_version_title">Library Version</string>
+    <string name="classiccommand_get_version_description">Request the version of the MIFARE Classic library</string>
+    <string name="classiccommand_read_classic_title">Read Classic</string>
+    <string name="classiccommand_read_classic_description">Read MIFARE Classic</string>
+
+    <string name="type4command_detect_title">Detect Type 4</string>
+    <string name="type4command_detect_description">Scan for a Type 4 tag</string>
+    <string name="type4command_get_version_title">Library Version</string>
+    <string name="type4command_get_version_description">Request the version of the Type 4 library</string>
+    <string name="type4command_transceive_apdu_title">Transceive APDU</string>
+    <string name="type4command_transceive_apdu_description">Transceive Type 4 APDU</string>
+
 </resources>
