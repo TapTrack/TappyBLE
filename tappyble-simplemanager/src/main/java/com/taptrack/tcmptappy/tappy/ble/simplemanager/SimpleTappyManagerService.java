@@ -320,9 +320,11 @@ public class SimpleTappyManagerService extends Service {
         }
 
         if(status == TappyBleDeviceStatus.DISCONNECTED &&
+                autoReconnect &&
                 oldStatus != TappyBleDeviceStatus.DISCONNECTED) {
             connectActiveDevice();
         }
+
 
         Intent intent = new Intent(Intents.ACTION_NEW_STATUS);
         intent.putExtra(Intents.EXTRA_DEVICE_STATUS,status);
