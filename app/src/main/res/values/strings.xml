@@ -49,4 +49,6 @@
     <string name="stop_command">Stop</string>
     <string name="hex_command">Hexadecimal message</string>
     <string name="error_command_must_be_hex">Message must be a valid hexadecimal byte array</string>
+    <string name="key_choice">Key Choice</string>
+    <string name="key_hint">Key (Hex)</string>
 </resources>
