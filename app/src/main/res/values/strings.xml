@@ -51,4 +51,8 @@
     <string name="error_command_must_be_hex">Message must be a valid hexadecimal byte array</string>
     <string name="key_choice">Key Choice</string>
     <string name="key_hint">Key (Hex)</string>
+    <string name="key_a">Key A</string>
+    <string name="key_b">Key B</string>
+    <string name="to_inbetween_page_ranges_classic">to</string>
+    <string name="read_range_label">Read pages</string>
 </resources>

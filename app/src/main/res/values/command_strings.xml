@@ -43,7 +43,7 @@
     <string name="classiccommand_get_version_title">Library Version</string>
     <string name="classiccommand_get_version_description">Request the version of the MIFARE Classic library</string>
     <string name="classiccommand_read_classic_title">Read Classic</string>
-    <string name="classiccommand_read_classic_description">Read MIFARE Classic</string>
+    <string name="classiccommand_read_classic_description">Read data from a MIFARE Classic. For this example, the Tappy will always attempt to authenticate with key A using the default key</string>
 
     <string name="type4command_detect_title">Detect Type 4</string>
     <string name="type4command_detect_description">Scan for a Type 4 tag</string>

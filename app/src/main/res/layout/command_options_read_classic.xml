@@ -16,9 +16,10 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/fl_timeout_holder"
@@ -44,46 +45,49 @@
             android:max="10"
             />
     </FrameLayout>
+
     <FrameLayout
-        android:id="@+id/fl_key_choice"
-        android:layout_below="@+id/fl_timeout_holder"
+        android:id="@+id/fl_read_range_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="4dp">
 
         <TextView
-            android:id="@+id/tv_key_choice"
+            android:id="@+id/tv_read_range"
             style="@style/TextAppearance.AppCompat.Caption"
+            android:text="@string/read_range_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-            android:text="@string/key_choice"
+            android:layout_marginTop="4dp"
             />
-
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/sw_key_choice"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            />
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/fl_text_holder"
-        android:layout_below="@+id/fl_key_choice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+            android:layout_gravity="end|center_vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_key_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp">
-            <EditText
-                android:id="@+id/et_key"
-                android:layout_width="match_parent"
+            <com.taptrack.tcmptappy.ui.modules.tappyblesearcher.vistas.littleviews.BytePickerView
+                android:id="@+id/bpv_start_page"
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
+                android:solidColor="#FFFFFF"
+                app:initialValue="0"
+                app:disableDivider="true"/>
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/key_hint"/>
-        </android.support.design.widget.TextInputLayout>
+                android:layout_gravity="center_vertical"
+                android:text="@string/to_inbetween_page_ranges_classic"/>
+            <com.taptrack.tcmptappy.ui.modules.tappyblesearcher.vistas.littleviews.BytePickerView
+                android:id="@+id/bpv_end_page"
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:layout_margin="8dp"
+                android:solidColor="#FFFFFF"
+                app:initialValue="0"
+                app:disableDivider="true"/>
+        </LinearLayout>
     </FrameLayout>
 </LinearLayout>

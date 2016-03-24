@@ -28,9 +28,11 @@ import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.pret
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultNoParameterCommands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultBasicNfcScanCommands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultDetectCommands;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.ReadClassicCommandImpl;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.SendTransceiveApduCommand;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.HexCommandAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.NoParameterAdapter;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.ReadClassicCommandAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.ScanCommandAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.TextCommandAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.TimeoutCommandAdapter;
@@ -148,6 +150,11 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
                 R.string.classiccommand_detect_description,
                 R.drawable.ic_nfc_black_48dp));
         sortedClassicCommands.add(new CommandItem(
+                KEY_READ_CLASSIC,
+                R.string.classiccommand_read_classic_title,
+                R.string.classiccommand_read_classic_description,
+                R.drawable.ic_library_books_black_48dp));
+        sortedClassicCommands.add(new CommandItem(
                 KEY_CLASSIC_LIBV,
                 R.string.classiccommand_get_version_title,
                 R.string.classiccommand_get_version_description,
@@ -235,6 +242,9 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
         }
         else if (itemId == KEY_TRANSCEIVE_APDU) {
             return new HexCommandAdapter(new SendTransceiveApduCommand(getCommandItem(itemId)));
+        }
+        else if (itemId == KEY_READ_CLASSIC) {
+            return new ReadClassicCommandAdapter(new ReadClassicCommandImpl(getCommandItem(itemId)));
         }
         else {
             return new NoParameterAdapter(new DefaultNoParameterCommands(getCommandItem(itemId)));
