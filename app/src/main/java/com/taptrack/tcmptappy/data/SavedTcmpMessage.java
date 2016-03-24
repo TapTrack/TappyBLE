@@ -85,6 +85,8 @@ public class SavedTcmpMessage {
     @Override
     public int hashCode() {
         int result = getDbId() != null ? getDbId().hashCode() : 0;
+        if(result > 0)
+            return result;
         result = 31 * result + getName().hashCode();
         result = 31 * result + getAddress().hashCode();
         result = 31 * result + getTimestamp().hashCode();

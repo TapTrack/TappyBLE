@@ -80,7 +80,7 @@
     <string name="mifareclassic_4k_detected">Detected MIFARE Classic 4K\nUID: %1$s</string>
     <string name="mifareclassic_unkcap_detected">Detected unknown capacity MIFARE Classic\nUID: %1$s</string>
     <string name="mifareclassic_timeout">MIFARE Classic scan timed out</string>
-    <string name="mifareclassic_read_success">Succcessfully read MIFARE Classic\nUID:%1$s\nStart: %2$02X\nEnd: %3$02X\nData: %4$s</string>
+    <string name="mifareclassic_read_success">Succcessfully read MIFARE Classic\nUID: %1$s\nStart: %2$02X\nEnd: %3$02X\nData: %4$s</string>
 
     <!-- Type 4 Responses -->
     <string name="apdu_transceive_successful">Successfully transceived APDU\nCard responded with:\n$1%s</string>

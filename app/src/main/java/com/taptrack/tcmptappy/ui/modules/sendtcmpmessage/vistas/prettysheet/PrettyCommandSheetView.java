@@ -38,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 
@@ -83,6 +84,7 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
     private final TimeInterpolator interpolator= new FastOutLinearInInterpolator();
 
     private boolean isShowingCommands = false;
+    private boolean isExpanded = false;
 
     private final CommandFamilyAdapter.CommandFamilySelectedListener familySelectedListener
             = new CommandFamilyAdapter.CommandFamilySelectedListener() {
@@ -131,6 +133,17 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 //            if(isInDetailMode)
 //                updateShimHeight();
+//            showCommandDetailViewIfHidden(false,0,0);
+        }
+    };
+
+    private final ViewTreeObserver.OnGlobalLayoutListener layoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+        @Override
+        public void onGlobalLayout() {
+            if(isInDetailMode &&
+                    ((detailExpandAnimation == null || !detailExpandAnimation.isRunning()
+                    && (detailCircularFloofAnimation == null || !detailCircularFloofAnimation.isRunning()))))
+                showCommandDetailViewIfHidden(false,0,0);
         }
     };
 
@@ -204,7 +217,6 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
             commandAdapter.setHasStableIds(true);
             commandSelector.setAdapter(commandAdapter);
 
-
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
             animContractVelocityPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ANIM_CONTRACT_VELOCITY_DIP, metrics);
             animExpandVelocityPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, ANIM_EXPAND_VELOCITY_DIP, metrics);
@@ -219,6 +231,8 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
 
             commandDetailView.addOnLayoutChangeListener(layoutChangeListener);
             commandDetailView.setSendListener(commandSendListener);
+
+            getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
 
             setPrettySheetAdapter(new DefaultPrettySheetAdapter());
             loadRecyclerAdapters();
@@ -392,6 +406,8 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
         this.detailShowY = y;
 
         commandDetailView.setShimHeight(0);
+        commandDetailView.getLayoutParams().height = 0;
+        commandDetailView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
         commandDetailView.measure(MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
         int newHeight = commandDetailView.getMeasuredHeight();
 
@@ -411,6 +427,7 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
             interpolatedExpandCommandDetail(x,y,minimumHeight, targetHeight, 1);
         }
         else {
+            isExpanded = true;
             commandDetailView.getLayoutParams().height = targetHeight;
             commandDetailView.setVisibility(VISIBLE);
             commandDetailView.invalidate();
@@ -443,17 +460,20 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
         valueAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
+                isExpanded = false;
                 commandDetailView.setVisibility(VISIBLE);
                 initiateCommandEntryFloof(x,y);
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                isExpanded = true;
 //                commandDetailView.setVisibility(VISIBLE);
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                isExpanded = true;
 
             }
 
@@ -712,12 +732,12 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
 
         //disabling persistence of the command selection because
         // of measurement issues with orientation changes
-//        bundle.putInt(KEY_SELECTED_COMMAND, selectedCommand);
-//        bundle.putBoolean(KEY_DETAIL_MODE, isInDetailMode);
+        bundle.putInt(KEY_SELECTED_COMMAND, selectedCommand);
+        bundle.putBoolean(KEY_DETAIL_MODE, isInDetailMode);
 
-        bundle.putInt(KEY_SELECTED_COMMAND, PrettySheetAdapter.NONE);
+//        bundle.putInt(KEY_SELECTED_COMMAND, PrettySheetAdapter.NONE);
         bundle.putInt(KEY_SELECTED_FAMILY, selectedFamily);
-        bundle.putBoolean(KEY_DETAIL_MODE, false);
+//        bundle.putBoolean(KEY_DETAIL_MODE, false);
 
     }
 
@@ -762,6 +782,18 @@ public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMe
         else {
             return false;
         }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        getViewTreeObserver().removeOnGlobalLayoutListener(layoutListener);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
     }
 
     public static class Behavior extends CoordinatorLayout.Behavior<PrettyCommandSheetView> {
