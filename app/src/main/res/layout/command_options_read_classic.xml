@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
-            <com.taptrack.tcmptappy.ui.modules.tappyblesearcher.vistas.littleviews.BytePickerView
+            <com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.littleviews.BytePickerView
                 android:id="@+id/bpv_start_page"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/to_inbetween_page_ranges_classic"/>
-            <com.taptrack.tcmptappy.ui.modules.tappyblesearcher.vistas.littleviews.BytePickerView
+            <com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.littleviews.BytePickerView
                 android:id="@+id/bpv_end_page"
                 android:layout_width="60dp"
                 android:layout_height="80dp"

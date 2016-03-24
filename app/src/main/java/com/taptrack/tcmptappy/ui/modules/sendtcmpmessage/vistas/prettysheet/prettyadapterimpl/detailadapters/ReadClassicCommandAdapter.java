@@ -31,7 +31,7 @@ import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.KeySetting;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.commanddetail.CommandDetailViewAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.DetailAdapterCommand;
-import com.taptrack.tcmptappy.ui.modules.tappyblesearcher.vistas.littleviews.BytePickerView;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.littleviews.BytePickerView;
 
 import butterknife.ButterKnife;
 
