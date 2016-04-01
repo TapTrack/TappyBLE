@@ -76,6 +76,10 @@ public class TappyBleCommunicator implements TappyBleStatusChangedListener, Pack
         tappyBleDelegate.connect();
     }
 
+    public void disconnect() {
+        tappyBleDelegate.disconnect();
+    }
+
     public void close() {
         tappyBleDelegate.close();
         receivedListeners.clear();
