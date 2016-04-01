@@ -4,9 +4,9 @@ NFC reader.
 
 ## Common Gradle Dependencies
 ```groovy
-compile 'com.taptrack.tcmptappy:tappyble-scanner:0.7.0'
-compile 'com.taptrack.tcmptappy:tappyble-service:0.7.0'
-compile 'com.taptrack.tcmptappy:tappyble-simplemanager:0.7.0'
+compile 'com.taptrack.tcmptappy:tappyble-scanner:0.8.0'
+compile 'com.taptrack.tcmptappy:tappyble-service:0.8.0'
+compile 'com.taptrack.tcmptappy:tappyble-simplemanager:0.8.0'
 ```
 
 ## Documentation
