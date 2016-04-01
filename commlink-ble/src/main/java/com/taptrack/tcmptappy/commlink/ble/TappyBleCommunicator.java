@@ -23,9 +23,9 @@ import com.taptrack.tcmptappy.commlink.CommunicatorStatusChangeListener;
 import com.taptrack.tcmptappy.commlink.PacketListener;
 import com.taptrack.tcmptappy.commlink.TcmpMessageListener;
 import com.taptrack.tcmptappy.commlink.UnparsablePacketListener;
-import com.taptrack.tcmptappy.commlink.ble.delegate.Tappy$$BleDelegate;
-import com.taptrack.tcmptappy.commlink.ble.delegate.Tappy$$BleState;
-import com.taptrack.tcmptappy.commlink.ble.delegate.Tappy$$BleStatusChangedListener;
+import com.taptrack.tcmptappy.commlink.ble.delegate.TappyBleDelegate;
+import com.taptrack.tcmptappy.commlink.ble.delegate.TappyBleState;
+import com.taptrack.tcmptappy.commlink.ble.delegate.TappyBleStatusChangedListener;
 import com.taptrack.tcmptappy.tappy.ble.TappyBleDeviceDefinition;
 import com.taptrack.tcmptappy.tappy.ble.TappyBleDeviceStatus;
 import com.taptrack.tcmptappy.tcmp.RawTCMPMessage;
@@ -36,7 +36,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TappyBleCommunicator implements Tappy$$BleStatusChangedListener, PacketListener {
+public class TappyBleCommunicator implements TappyBleStatusChangedListener, PacketListener {
     private static final String TAG = TappyBleCommunicator.class.getSimpleName();
 
     private final Set<TcmpMessageListener> receivedListeners
@@ -47,7 +47,7 @@ public class TappyBleCommunicator implements Tappy$$BleStatusChangedListener, Pa
     private final Set<CommunicatorStatusChangeListener> communicatorStatusChangeListeners
             = new CopyOnWriteArraySet<>();
 
-    private final Tappy$$BleDelegate tappyBleDelegate;
+    private final TappyBleDelegate tappyBleDelegate;
 
     private final TappyBleDeviceDefinition deviceDefinition;
 
@@ -55,7 +55,7 @@ public class TappyBleCommunicator implements Tappy$$BleStatusChangedListener, Pa
 
     public TappyBleCommunicator(Context ctx, TappyBleDeviceDefinition deviceDefinition) {
         tappyBleDelegate =
-                new Tappy$$BleDelegate(ctx,
+                new TappyBleDelegate(ctx,
                         deviceDefinition.getAddress(),
                         deviceDefinition.getSerialServiceUuid(),
                         deviceDefinition.getTxCharacteristicUuid(),
@@ -91,17 +91,17 @@ public class TappyBleCommunicator implements Tappy$$BleStatusChangedListener, Pa
     public int getState() {
         int state = readStateSync();
         switch (state) {
-            case Tappy$$BleState.CONNECTED: {
+            case TappyBleState.CONNECTED: {
                 return TappyBleDeviceStatus.CONNECTING;
             }
-            case Tappy$$BleState.CONNECTING: {
+            case TappyBleState.CONNECTING: {
                 return TappyBleDeviceStatus.CONNECTING;
             }
-            case Tappy$$BleState.CLOSED:
-            case Tappy$$BleState.DISCONNECTED: {
+            case TappyBleState.CLOSED:
+            case TappyBleState.DISCONNECTED: {
                 return TappyBleDeviceStatus.DISCONNECTED;
             }
-            case Tappy$$BleState.READY: {
+            case TappyBleState.READY: {
                 return TappyBleDeviceStatus.READY;
             }
             default: {

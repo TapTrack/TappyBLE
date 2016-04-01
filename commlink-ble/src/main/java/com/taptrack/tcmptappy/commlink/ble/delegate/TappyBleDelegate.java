@@ -45,20 +45,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Tappy$$BleDelegate {
-    private static final String TAG = Tappy$$BleDelegate.class.getName();
+public class TappyBleDelegate {
+    private static final String TAG = TappyBleDelegate.class.getName();
 
     private final Set<PacketListener> packetListeners
             = new CopyOnWriteArraySet<>();
 
-    private final Set<Tappy$$BleStatusChangedListener> statusListeners
+    private final Set<TappyBleStatusChangedListener> statusListeners
             = new CopyOnWriteArraySet<>();
 
-    private final AtomicInteger state = new AtomicInteger(Tappy$$BleState.DISCONNECTED);
+    private final AtomicInteger state = new AtomicInteger(TappyBleState.DISCONNECTED);
 
     private final Context ctx;
 
-    private final Tappy$$BleMtuChunkingStream mtuChunkingStream = new Tappy$$BleMtuChunkingStream();
+    private final TappyBleMtuChunkingStream mtuChunkingStream = new TappyBleMtuChunkingStream();
 
     private final AtomicReference<BluetoothManager> bluetoothManagerRef = new AtomicReference<>();
     private final AtomicReference<BluetoothAdapter> bluetoothAdapterRef = new AtomicReference<>();
@@ -81,7 +81,7 @@ public class Tappy$$BleDelegate {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                changeState(Tappy$$BleState.CONNECTED);
+                changeState(TappyBleState.CONNECTED);
                 BluetoothGatt bluetoothGatt = bluetoothGattRef.get();
                 Log.i(TAG, "Connected to GATT server.");
                 // Attempts to discover services after successful connection.
@@ -91,11 +91,11 @@ public class Tappy$$BleDelegate {
                 }
                 else {
                     Log.wtf(TAG,"Somehow connected with no gatt");
-                    changeState(Tappy$$BleState.ERROR);
+                    changeState(TappyBleState.ERROR);
                 }
 
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                changeState(Tappy$$BleState.DISCONNECTED);
+                changeState(TappyBleState.DISCONNECTED);
                 Log.i(TAG, "Disconnected from GATT server.");
             }
         }
@@ -106,7 +106,7 @@ public class Tappy$$BleDelegate {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 servicesDetected();
             } else {
-                changeState(Tappy$$BleState.ERROR);
+                changeState(TappyBleState.ERROR);
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
         }
@@ -143,11 +143,11 @@ public class Tappy$$BleDelegate {
         }
     };
 
-    public Tappy$$BleDelegate (Context ctx,
-                               String address,
-                               UUID serialServiceUuid,
-                               UUID txCharacteristicUuid,
-                               UUID rxCharactertisticUuid) {
+    public TappyBleDelegate(Context ctx,
+                            String address,
+                            UUID serialServiceUuid,
+                            UUID txCharacteristicUuid,
+                            UUID rxCharactertisticUuid) {
         this.ctx = ctx;
         this.uiThreadHandler = new Handler(ctx.getMainLooper());
         this.bleDeviceAddress = address;
@@ -215,17 +215,17 @@ public class Tappy$$BleDelegate {
     }
     
     protected void notifyStateListeners(int newState) {
-        for (Tappy$$BleStatusChangedListener listener:
+        for (TappyBleStatusChangedListener listener:
              statusListeners) {
             listener.onNewStatus(newState);
         }
     }
 
-    public void registerStatusChangedListener(Tappy$$BleStatusChangedListener listener) {
+    public void registerStatusChangedListener(TappyBleStatusChangedListener listener) {
         statusListeners.add(listener);
     }
 
-    public void unregisterStatusChangedListener(Tappy$$BleStatusChangedListener listener) {
+    public void unregisterStatusChangedListener(TappyBleStatusChangedListener listener) {
         statusListeners.remove(listener);
     }
 
@@ -235,7 +235,7 @@ public class Tappy$$BleDelegate {
     }
 
     public boolean isReady() {
-        return getState() == Tappy$$BleState.READY;
+        return getState() == TappyBleState.READY;
     }
 
     public void servicesDetected() {
@@ -244,11 +244,11 @@ public class Tappy$$BleDelegate {
             BluetoothGattService service = bluetoothGatt.getService(serialServiceUuid);
             BluetoothGattCharacteristic charac = service.getCharacteristic(txCharacteristicUuid);
             bluetoothGatt.setCharacteristicNotification(charac, true);
-            changeState(Tappy$$BleState.READY);
+            changeState(TappyBleState.READY);
         }
         else {
             Log.wtf(TAG,"Services detected with no gatt");
-            changeState(Tappy$$BleState.ERROR);
+            changeState(TappyBleState.ERROR);
         }
     }
 
@@ -264,7 +264,7 @@ public class Tappy$$BleDelegate {
             bluetoothManager = (BluetoothManager) ctx.getSystemService(Context.BLUETOOTH_SERVICE);
             if (bluetoothManager == null) {
                 Log.e(TAG, "Unable to initialize BluetoothManager.");
-                changeState(Tappy$$BleState.ERROR);
+                changeState(TappyBleState.ERROR);
                 return false;
             }
             else {
@@ -274,7 +274,7 @@ public class Tappy$$BleDelegate {
 
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
         if (bluetoothAdapter == null) {
-            changeState(Tappy$$BleState.ERROR);
+            changeState(TappyBleState.ERROR);
             Log.e(TAG, "Unable to obtain a BluetoothAdapter.");
             return false;
         }
@@ -286,11 +286,11 @@ public class Tappy$$BleDelegate {
     }
 
     public boolean connect() {
-        changeState(Tappy$$BleState.DISCONNECTED);
+        changeState(TappyBleState.DISCONNECTED);
         BluetoothAdapter bluetoothAdapter = bluetoothAdapterRef.get();
         if (bluetoothAdapter == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
-            changeState(Tappy$$BleState.ERROR);
+            changeState(TappyBleState.ERROR);
             return false;
         }
 
@@ -300,10 +300,10 @@ public class Tappy$$BleDelegate {
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (bluetoothGatt.connect()) {
                 //STATE CONNECTING
-                changeState(Tappy$$BleState.CONNECTING);
+                changeState(TappyBleState.CONNECTING);
                 return true;
             } else {
-                changeState(Tappy$$BleState.ERROR);
+                changeState(TappyBleState.ERROR);
                 return false;
             }
         }
@@ -311,14 +311,14 @@ public class Tappy$$BleDelegate {
         final BluetoothDevice device = bluetoothAdapter.getRemoteDevice(bleDeviceAddress);
         if (device == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
-            changeState(Tappy$$BleState.ERROR);
+            changeState(TappyBleState.ERROR);
             return false;
         }
 
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
         // this supposedly has some strange behaviour on some devices
-        changeState(Tappy$$BleState.CONNECTING);
+        changeState(TappyBleState.CONNECTING);
         uiThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -335,12 +335,12 @@ public class Tappy$$BleDelegate {
         BluetoothGatt bluetoothGatt = bluetoothGattRef.get();
         if (bluetoothAdapter == null || bluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");
-            changeState(Tappy$$BleState.ERROR);
+            changeState(TappyBleState.ERROR);
 
             return;
         }
         bluetoothGatt.disconnect();
-        changeState(Tappy$$BleState.DISCONNECTED);
+        changeState(TappyBleState.DISCONNECTED);
     }
 
     public void close() {
@@ -350,7 +350,7 @@ public class Tappy$$BleDelegate {
         }
         bluetoothGatt.close();
         bluetoothGattRef.set(null);
-        changeState(Tappy$$BleState.CLOSED);
+        changeState(TappyBleState.CLOSED);
     }
 
     protected void initiateSendIfNecessary() {
@@ -367,7 +367,7 @@ public class Tappy$$BleDelegate {
 
         mtuChunkingStream.lockRead();
         if(mtuChunkingStream.hasBytes() &&
-                currentState == Tappy$$BleState.READY &&
+                currentState == TappyBleState.READY &&
                 bluetoothGatt != null) {
             byte[] nextChunk = mtuChunkingStream.getNextChunk();
 

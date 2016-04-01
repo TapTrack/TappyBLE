@@ -25,8 +25,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class Tappy$$BleMtuChunkingStream {
-    private static final String TAG = Tappy$$BleMtuChunkingStream.class.getName();
+public class TappyBleMtuChunkingStream {
+    private static final String TAG = TappyBleMtuChunkingStream.class.getName();
 
     private ByteArrayInputStream mSendInputStream = new ByteArrayInputStream(new byte[0]);
     private final Lock readLock;

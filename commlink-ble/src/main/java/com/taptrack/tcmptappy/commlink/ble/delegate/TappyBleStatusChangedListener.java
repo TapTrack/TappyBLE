@@ -16,6 +16,6 @@
 
 package com.taptrack.tcmptappy.commlink.ble.delegate;
 
-public interface Tappy$$BleStatusChangedListener {
+public interface TappyBleStatusChangedListener {
     void onNewStatus(int status);
 }

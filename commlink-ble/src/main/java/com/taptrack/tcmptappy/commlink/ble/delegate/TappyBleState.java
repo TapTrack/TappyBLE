@@ -16,7 +16,7 @@
 
 package com.taptrack.tcmptappy.commlink.ble.delegate;
 
-public interface Tappy$$BleState {
+public interface TappyBleState {
     public static final int ERROR = 0;
     public static final int DISCONNECTED = 2;
     public static final int CONNECTING = 3;
