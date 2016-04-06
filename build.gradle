@@ -67,18 +67,6 @@ ext.bintrayCfg = [
                         artifact : 'blescannercompat',
                         libraryDescription : 'Compat library for JellyBean/Lollipop BLE APIs',
                 ],
-                systemCommandFamily: [
-                        bintrayName : 'commandfamily-system',
-                        libraryName : 'System TCMP Command Family',
-                        artifact : 'commandfamily-system',
-                        libraryDescription : 'Command family for system-level tappy commands',
-                ],
-                basicNfcCommandFamily: [
-                        bintrayName : 'commandfamily-basicnfc',
-                        libraryName : 'Basic Nfc TCMP Command Family',
-                        artifact : 'commandfamily-basicnfc',
-                        libraryDescription : 'Command family for performing basic NFC operations',
-                ],
                 commonCommandFamily: [
                         bintrayName : 'commandfamily-common',
                         libraryName : 'Abstract TCMP Command Family',
@@ -159,5 +147,7 @@ ext.libraries = [
         tcmpType4CommandFamily : "com.taptrack.tcmptappy:commandfamily-type4:0.2.0",
 
 
-        tcmpTappyBleScanner : project(':tappyble-scanner')
+        tcmpTappyBleScanner : project(':tappyble-scanner'),
+
+        junit : 'junit:junit:4.12'
 ]

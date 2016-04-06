@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/blescannercompat" />
             <option value="$PROJECT_DIR$/commandfamily-common" />
-            <option value="$PROJECT_DIR$/commandfamily-system" />
             <option value="$PROJECT_DIR$/commlink-ble" />
             <option value="$PROJECT_DIR$/commlink-common" />
             <option value="$PROJECT_DIR$/hdlc" />

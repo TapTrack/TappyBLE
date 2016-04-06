@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/blescannercompat/blescannercompat.iml" filepath="$PROJECT_DIR$/blescannercompat/blescannercompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/commandfamily-common/commandfamily-common.iml" filepath="$PROJECT_DIR$/commandfamily-common/commandfamily-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commandfamily-system/commandfamily-system.iml" filepath="$PROJECT_DIR$/commandfamily-system/commandfamily-system.iml" />
       <module fileurl="file://$PROJECT_DIR$/commlink-ble/commlink-ble.iml" filepath="$PROJECT_DIR$/commlink-ble/commlink-ble.iml" />
       <module fileurl="file://$PROJECT_DIR$/commlink-common/commlink-common.iml" filepath="$PROJECT_DIR$/commlink-common/commlink-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/hdlc/hdlc.iml" filepath="$PROJECT_DIR$/hdlc/hdlc.iml" />

@@ -1,1 +1,1 @@
-include ':app', ':commandfamily-system', ':message-common', ':hdlc', ':commandfamily-common', ':commlink-common', ':commlink-ble', ':tappyble-service', ':blescannercompat', ':tappy-bledevice', ':tappyble-scanner', ':tappy-constants', ':tappyble-simplemanager'
+include ':app', ':message-common', ':hdlc', ':commandfamily-common', ':commlink-common', ':commlink-ble', ':tappyble-service', ':blescannercompat', ':tappy-bledevice', ':tappyble-scanner', ':tappy-constants', ':tappyble-simplemanager'
