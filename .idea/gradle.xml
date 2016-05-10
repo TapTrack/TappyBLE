@@ -24,6 +24,23 @@
             <option value="$PROJECT_DIR$/tappyble-simplemanager" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/blescannercompat" />
+            <option value="$PROJECT_DIR$/commandfamily-common" />
+            <option value="$PROJECT_DIR$/commlink-ble" />
+            <option value="$PROJECT_DIR$/commlink-common" />
+            <option value="$PROJECT_DIR$/hdlc" />
+            <option value="$PROJECT_DIR$/message-common" />
+            <option value="$PROJECT_DIR$/tappy-bledevice" />
+            <option value="$PROJECT_DIR$/tappy-constants" />
+            <option value="$PROJECT_DIR$/tappyble-scanner" />
+            <option value="$PROJECT_DIR$/tappyble-service" />
+            <option value="$PROJECT_DIR$/tappyble-simplemanager" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

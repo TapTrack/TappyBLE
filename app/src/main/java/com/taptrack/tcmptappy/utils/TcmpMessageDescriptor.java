@@ -119,7 +119,7 @@ public class TcmpMessageDescriptor {
                 return String.format(form,(0xff&((StreamNdefCommand) command).getTimeout()));
             }
             else {
-                return ctx.getString(R.string.stream_ndef_indefinite);
+                return ctx.getString(R.string.stream_tag_indefinitely);
             }
         }
         else if (command instanceof ScanTagCommand) {
@@ -164,6 +164,9 @@ public class TcmpMessageDescriptor {
                 return String.format(form,uri);
             }
         }
+        else if (command instanceof StopCommand) {
+            return ctx.getString(R.string.stop_command);
+        }
         else {
             return ctx.getString(R.string.unknown_command);
         }
@@ -181,9 +184,6 @@ public class TcmpMessageDescriptor {
         }
         else if (command instanceof PingCommand) {
             return ctx.getString(R.string.ping_command);
-        }
-        else if (command instanceof StopCommand) {
-            return ctx.getString(R.string.stop_command);
         }
         else {
             return ctx.getString(R.string.unknown_command);
