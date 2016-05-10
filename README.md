@@ -1,6 +1,6 @@
 # Taptrack Tappy BLE SDK
-This project provides a standard SDK for interfacing with a TapTrack TappyBLE
-NFC reader.
+This project provides a standard SDK for interfacing with a TapTrack TappyBLE NFC reader. The 'app' module contains the TappyBLE example app found at 
+https://play.google.com/store/apps/details?id=com.taptrack.bletappyexample
 
 ## Common Gradle Dependencies
 ```groovy
