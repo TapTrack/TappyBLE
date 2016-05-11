@@ -187,7 +187,7 @@ public class ReadClassicCommandAdapter implements CommandDetailViewAdapter {
         SeekBar seekBar = ButterKnife.findById(parameterViewParent, R.id.seeker_polling_time);
 
         int timeValue = seekBar.getProgress() + 1;
-        timeValue = timeValue == 10 ? 0: timeValue;
+        timeValue = timeValue == 11 ? 0: timeValue;
 
         final BytePickerView startPageView = ButterKnife.findById(parameterViewParent,R.id.bpv_start_page);
         final BytePickerView endPageView = ButterKnife.findById(parameterViewParent,R.id.bpv_end_page);
