@@ -34,7 +34,7 @@ import com.taptrack.tcmptappy.utils.TcmpMessageDescriptor;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TcmpCmdListDelegate extends AbsAdapterDelegate<List<ParsedTcmpMessage>> {
@@ -76,10 +76,10 @@ public class TcmpCmdListDelegate extends AbsAdapterDelegate<List<ParsedTcmpMessa
     }
 
     protected class NoParameterCmdViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_description)
+        @BindView(R.id.tv_description)
         TextView descriptionText;
 
-        @Bind(R.id.vg_data_holder)
+        @BindView(R.id.vg_data_holder)
         ViewGroup dataHolder;
 
         boolean isRepeatedMode = false;

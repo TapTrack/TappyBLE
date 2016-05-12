@@ -34,6 +34,7 @@ public class TappyPersistenceModule {
     @ApplicationScope
     SavedTappiesService getSavedTappyService(StorIOContentResolver resolver,
                                              @Named(AppModule.NAME_SCHEDULER_IO) Scheduler ioScheduler) {
+//        return new MockSavedTappiesImpl(ioScheduler);
         return new SavedTappiesImpl(resolver,ioScheduler);
     }
 
@@ -41,6 +42,7 @@ public class TappyPersistenceModule {
     @ApplicationScope
     ActiveTappiesService getActiveTappyService(StorIOContentResolver resolver,
                                                @Named(AppModule.NAME_SCHEDULER_IO) Scheduler ioScheduler) {
+//        return new MockActiveTappiesImpl(ioScheduler);
         return new ActiveTappiesImpl(resolver,ioScheduler);
     }
 }

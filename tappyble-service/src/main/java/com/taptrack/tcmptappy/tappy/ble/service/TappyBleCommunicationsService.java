@@ -80,7 +80,12 @@ public class TappyBleCommunicationsService extends Service {
         connectionsReadLock.lock();
         CommunicatorHolder holder = communicatorHolderMap.get(deviceDefinition.getAddress());
         connectionsReadLock.unlock();
-        return holder.getCommunicator();
+        if(holder != null) {
+            return holder.getCommunicator();
+        }
+        else {
+            return null;
+        }
     }
 
     public void sendMessage(ParcelableTappyBleDeviceDefinition definition, byte[] message) {

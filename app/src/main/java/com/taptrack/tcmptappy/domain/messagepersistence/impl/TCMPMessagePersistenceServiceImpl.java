@@ -18,9 +18,12 @@ package com.taptrack.tcmptappy.domain.messagepersistence.impl;
 
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DeleteResult;
+import com.pushtorefresh.storio.contentresolver.operations.get.PreparedGetListOfObjects;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResult;
 import com.pushtorefresh.storio.contentresolver.queries.DeleteQuery;
 import com.pushtorefresh.storio.contentresolver.queries.Query;
+import com.pushtorefresh.storio.operations.internal.MapSomethingToExecuteAsBlocking;
+import com.pushtorefresh.storio.operations.internal.OnSubscribeExecuteAsBlocking;
 import com.taptrack.tcmptappy.data.ParsedTcmpMessage;
 import com.taptrack.tcmptappy.data.SavedTcmpMessage;
 import com.taptrack.tcmptappy.domain.contentprovider.TappyBleDemoProvider;
@@ -79,60 +82,100 @@ public class TCMPMessagePersistenceServiceImpl implements TCMPMessagePersistence
 
     @Override
     public Observable<List<SavedTcmpMessage>> getSortedSavedTcmpMessages() {
-        return contentResolver.get()
-                .listOfObjects(SavedTcmpMessage.class)
-                .withQuery(Query.builder()
+        Query query = Query.builder()
                         .uri(TappyBleDemoProvider.URI_TCMP)
                         .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
-                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP+" ASC").build())
-                .prepare()
-                .asRxObservable()
+                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP+" DESC").build();
+        PreparedGetListOfObjects<SavedTcmpMessage> prep = contentResolver.get()
+                .listOfObjects(SavedTcmpMessage.class)
+                .withQuery(query)
+                .prepare();
+        return contentResolver
+                .observeChangesOfUri(query.uri()) // each change triggers executeAsBlocking
+                .map(MapSomethingToExecuteAsBlocking.newInstance(prep))
+                .startWith(Observable.create(OnSubscribeExecuteAsBlocking.newInstance(prep))) // start stream with first query result
+                .sample(100, TimeUnit.MILLISECONDS)
+                .onBackpressureLatest() // this is questionable
                 .subscribeOn(ioScheduler);
+//        return contentResolver.get()
+//                .listOfObjects(SavedTcmpMessage.class)
+//                .withQuery(Query.builder()
+//                        .uri(TappyBleDemoProvider.URI_TCMP)
+//                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
+//                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP+" ASC").build())
+//                .prepare()
+//                .asRxObservable()
+//                .subscribeOn(ioScheduler);
     }
 
     @Override
     public Observable<List<SavedTcmpMessage>> getSortedLimitedSavedTcmpMessages(int limit) {
-        return contentResolver.get()
-                .listOfObjects(SavedTcmpMessage.class)
-                .withQuery(Query.builder()
-                        .uri(TappyBleDemoProvider.URI_TCMP)
-                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
-                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC")
-                        .build())
-                .prepare()
-                .asRxObservable()
-                .subscribeOn(ioScheduler)
+
+//        Query query = Query.builder()
+//                .uri(TappyBleDemoProvider.URI_TCMP)
+//                .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
+//                .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC")
+//                .build();
+//        PreparedGetListOfObjects<SavedTcmpMessage> prep = contentResolver.get()
+//                .listOfObjects(SavedTcmpMessage.class)
+//                .withQuery(query)
+//                .prepare();
+        return this.getSortedSavedTcmpMessages()
                 .map(new LimitList(limit));
+//        return contentResolver
+//                .observeChangesOfUri(query.uri()) // each change triggers executeAsBlocking
+//                .map(MapSomethingToExecuteAsBlocking.newInstance(prep))
+//                .startWith(Observable.create(OnSubscribeExecuteAsBlocking.newInstance(prep))) // start stream with first query result
+//                .sample(100, TimeUnit.MILLISECONDS)
+//                .subscribeOn(ioScheduler)
+//                .map(new LimitList(limit));
+
+//        return contentResolver.get()
+//                .listOfObjects(SavedTcmpMessage.class)
+//                .withQuery(Query.builder()
+//                        .uri(TappyBleDemoProvider.URI_TCMP)
+//                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
+//                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC")
+//                        .build())
+//                .prepare()
+//                .asRxObservable()
+//                .subscribeOn(ioScheduler)
+//                .map(new LimitList(limit));
     }
 
     @Override
     public Observable<List<SavedTcmpMessage>> getSortedLimitedThrottledSavedTcmpMessages(int limit, int samplePeriod) {
-        return contentResolver.get()
-                .listOfObjects(SavedTcmpMessage.class)
-                .withQuery(Query.builder()
-                        .uri(TappyBleDemoProvider.URI_TCMP)
-                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
-                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC")
-                        .build())
-                .prepare()
-                .asRxObservable()
-                .subscribeOn(ioScheduler)
-                .sample(samplePeriod, TimeUnit.MILLISECONDS)
+        return this.getSortedSavedTcmpMessages()
+                .sample(samplePeriod,TimeUnit.MILLISECONDS)
                 .map(new LimitList(limit));
+//        return contentResolver.get()
+//                .listOfObjects(SavedTcmpMessage.class)
+//                .withQuery(Query.builder()
+//                        .uri(TappyBleDemoProvider.URI_TCMP)
+//                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
+//                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC")
+//                        .build())
+//                .prepare()
+//                .asRxObservable()
+//                .subscribeOn(ioScheduler)
+//                .sample(samplePeriod, TimeUnit.MILLISECONDS)
+//                .map(new LimitList(limit));
     }
 
     @Override
     public Observable<List<ParsedTcmpMessage>> getSortedResolvedTcmpMessages() {
-        return contentResolver.get()
-                .listOfObjects(SavedTcmpMessage.class)
-                .withQuery(Query.builder()
-                        .uri(TappyBleDemoProvider.URI_TCMP)
-                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
-                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC").build())
-                .prepare()
-                .asRxObservable()
-                .subscribeOn(ioScheduler)
+        return this.getSortedSavedTcmpMessages()
                 .map(new ConvertToParsed(messageResolver));
+//        return contentResolver.get()
+//                .listOfObjects(SavedTcmpMessage.class)
+//                .withQuery(Query.builder()
+//                        .uri(TappyBleDemoProvider.URI_TCMP)
+//                        .columns(TcmpMessagePersistenceContract.ALL_PROJECTION)
+//                        .sortOrder(TcmpMessagePersistenceContract.TIMESTAMP + " DESC").build())
+//                .prepare()
+//                .asRxObservable()
+//                .subscribeOn(ioScheduler)
+//                .map(new ConvertToParsed(messageResolver));
     }
 
     @Override

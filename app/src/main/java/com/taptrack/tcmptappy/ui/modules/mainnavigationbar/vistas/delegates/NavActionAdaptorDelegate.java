@@ -32,7 +32,7 @@ import com.taptrack.tcmptappy.ui.modules.mainnavigationbar.vistas.WrappedNavItem
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NavActionAdaptorDelegate extends AbsAdapterDelegate<List<WrappedNavItem>> {
@@ -87,20 +87,20 @@ public class NavActionAdaptorDelegate extends AbsAdapterDelegate<List<WrappedNav
     }
 
     protected class NavActionVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.rl_background_ndef)
+        @BindView(R.id.rl_background_ndef)
         View backgroundNdefHolder;
-        @Bind(R.id.cb_enable_ndef)
+        @BindView(R.id.cb_enable_ndef)
         CheckBox enableNdef;
 
-        @Bind(R.id.rl_enable_comm)
+        @BindView(R.id.rl_enable_comm)
         View enableCommHolder;
-        @Bind(R.id.sw_enable_comm)
+        @BindView(R.id.sw_enable_comm)
         SwitchCompat enableComm;
 
-        @Bind(R.id.rl_find_tappies)
+        @BindView(R.id.rl_find_tappies)
         View findTappiesHolder;
 
-        @Bind(R.id.rl_clear_messages)
+        @BindView(R.id.rl_clear_messages)
         View clearMessagesHolder;
 
 

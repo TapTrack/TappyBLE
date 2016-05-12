@@ -28,7 +28,7 @@ import com.taptrack.tcmptappy.ui.base.BaseActivity;
 import com.taptrack.tcmptappy.ui.modules.tappyblesearcher.vistas.list.TappyBleSearchListView;
 import com.taptrack.tcmptappy.utils.MarshmallowCompatBlePermDelegate;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SearchTappiesActivity extends BaseActivity {
@@ -38,10 +38,10 @@ public class SearchTappiesActivity extends BaseActivity {
 
     private MarshmallowCompatBlePermDelegate blePermDelegate;
 
-    @Bind(R.id.tappyList)
+    @BindView(R.id.tappyList)
     TappyBleSearchListView view;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Override

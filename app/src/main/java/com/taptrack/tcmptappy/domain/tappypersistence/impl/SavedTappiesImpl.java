@@ -18,8 +18,11 @@ package com.taptrack.tcmptappy.domain.tappypersistence.impl;
 
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DeleteResult;
+import com.pushtorefresh.storio.contentresolver.operations.get.PreparedGetListOfObjects;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResult;
 import com.pushtorefresh.storio.contentresolver.queries.Query;
+import com.pushtorefresh.storio.operations.internal.MapSomethingToExecuteAsBlocking;
+import com.pushtorefresh.storio.operations.internal.OnSubscribeExecuteAsBlocking;
 import com.taptrack.tcmptappy.data.SavedTappyDefinition;
 import com.taptrack.tcmptappy.domain.contentprovider.TappyBleDemoProvider;
 import com.taptrack.tcmptappy.domain.contentprovider.meta.SavedTappyPersistenceContract;
@@ -29,6 +32,7 @@ import com.taptrack.tcmptappy.tappy.ble.TappyBleDeviceDefinition;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -99,14 +103,21 @@ public class SavedTappiesImpl implements SavedTappiesService {
 
     @Override
     public Observable<Set<TappyBleDeviceDefinition>> getSavedTappies() {
-        return resolver.get()
+        Query query = Query.builder()
+                .uri(TappyBleDemoProvider.URI_SAVED)
+                .columns(SavedTappyPersistenceContract.ALL_PROJECTION)
+                .build();
+        PreparedGetListOfObjects<SavedTappyDefinition> prep = resolver.get()
                 .listOfObjects(SavedTappyDefinition.class)
-                .withQuery(Query.builder()
-                        .uri(TappyBleDemoProvider.URI_SAVED)
-                        .columns(SavedTappyPersistenceContract.ALL_PROJECTION)
-                        .build())
-                .prepare()
-                .asRxObservable()
+                .withQuery(query)
+                .prepare();
+
+        return resolver
+                .observeChangesOfUri(query.uri()) // each change triggers executeAsBlocking
+                .map(MapSomethingToExecuteAsBlocking.newInstance(prep))
+                .startWith(Observable.create(OnSubscribeExecuteAsBlocking.newInstance(prep))) // start stream with first query result
+                .sample(100, TimeUnit.MILLISECONDS)
+                .onBackpressureLatest() // this is questionable
                 .subscribeOn(ioScheduler)
                 .map(new Func1<List<SavedTappyDefinition>, Set<TappyBleDeviceDefinition>>() {
                     @Override
@@ -114,5 +125,64 @@ public class SavedTappiesImpl implements SavedTappiesService {
                         return new HashSet<TappyBleDeviceDefinition>(activeTappyDefinitions);
                     }
                 });
+//                .subscribe(new Subscriber<Set<TappyBleDeviceDefinition>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Timber.e(e,"El roboto is confused");
+//                    }
+//
+//                    @Override
+//                    public void onNext(Set<TappyBleDeviceDefinition> savedTappyDefinitions) {
+//
+//                    }
+//                });
+//                .map(new Func1<List<SavedTappyDefinition>, Set<TappyBleDeviceDefinition>>() {
+//                    @Override
+//                    public Set<TappyBleDeviceDefinition> call(List<SavedTappyDefinition> activeTappyDefinitions) {
+//                        return new HashSet<TappyBleDeviceDefinition>(activeTappyDefinitions);
+//                    }
+//                });
+//        resolver.get()
+//                .listOfObjects(SavedTappyDefinition.class)
+//                .withQuery(query)
+//                .prepare()
+//                .asRxObservable()
+//                .subscribe(new Subscriber<List<SavedTappyDefinition>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Timber.e(e,"Some stuff went down");
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<SavedTappyDefinition> savedTappyDefinitions) {
+//
+//                    }
+//                });
+//        return Observable.just((Set<TappyBleDeviceDefinition>) new HashSet<TappyBleDeviceDefinition>());
+//        return resolver.get()
+//                .listOfObjects(SavedTappyDefinition.class)
+//                .withQuery(Query.builder()
+//                        .uri(TappyBleDemoProvider.URI_SAVED)
+//                        .columns(SavedTappyPersistenceContract.ALL_PROJECTION)
+//                        .build())
+//                .prepare()
+//                .asRxObservable()
+//                .subscribeOn(ioScheduler)
+//                .map(new Func1<List<SavedTappyDefinition>, Set<TappyBleDeviceDefinition>>() {
+//                    @Override
+//                    public Set<TappyBleDeviceDefinition> call(List<SavedTappyDefinition> activeTappyDefinitions) {
+//                        return new HashSet<TappyBleDeviceDefinition>(activeTappyDefinitions);
+//                    }
+//                });
     }
 }

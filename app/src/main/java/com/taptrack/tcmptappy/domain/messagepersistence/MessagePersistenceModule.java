@@ -18,13 +18,13 @@ package com.taptrack.tcmptappy.domain.messagepersistence;
 
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.taptrack.tcmptappy.application.AppModule;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.MifareClassicCommandLibrary;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.Type4CommandLibrary;
-import com.taptrack.tcmptappy.tcmp.common.CommandFamilyMessageResolver;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.SystemCommandLibrary;
-import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.BasicNfcCommandLibrary;
 import com.taptrack.tcmptappy.dagger.ApplicationScope;
 import com.taptrack.tcmptappy.domain.messagepersistence.impl.TCMPMessagePersistenceServiceImpl;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.BasicNfcCommandLibrary;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.MifareClassicCommandLibrary;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.SystemCommandLibrary;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.Type4CommandLibrary;
+import com.taptrack.tcmptappy.tcmp.common.CommandFamilyMessageResolver;
 
 import javax.inject.Named;
 
@@ -52,5 +52,6 @@ public class MessagePersistenceModule {
                                                                CommandFamilyMessageResolver messageResolver,
                                                                @Named(AppModule.NAME_SCHEDULER_IO) Scheduler ioScheduler) {
         return new TCMPMessagePersistenceServiceImpl(contentResolver,messageResolver,ioScheduler);
+//        return new NothingMessagePersistenceService();
     }
 }

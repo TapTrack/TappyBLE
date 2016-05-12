@@ -33,13 +33,13 @@ import com.taptrack.tcmptappy.data.ParsedTcmpMessage;
 import com.taptrack.tcmptappy.data.SavedTcmpMessage;
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 import com.taptrack.tcmptappy.ui.modules.tcmpmessagelist.vistas.rich.adapter.TcmpMessageSelectedListener;
-import com.taptrack.tcmptappy.utils.TcmpMessageDescriptor;
 import com.taptrack.tcmptappy.utils.DrawableTinter;
 import com.taptrack.tcmptappy.utils.TappyColorUtils;
+import com.taptrack.tcmptappy.utils.TcmpMessageDescriptor;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TcmpResponseListDelegate extends AbsAdapterDelegate<List<ParsedTcmpMessage>> {
@@ -85,16 +85,16 @@ public class TcmpResponseListDelegate extends AbsAdapterDelegate<List<ParsedTcmp
     }
 
     protected class NoParameterRespViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_description)
+        @BindView(R.id.tv_description)
         TextView descriptionText;
 
-        @Bind(R.id.vg_data_holder)
+        @BindView(R.id.vg_data_holder)
         ViewGroup dataHolder;
 
-        @Bind(R.id.vg_avatar_holder)
+        @BindView(R.id.vg_avatar_holder)
         ViewGroup tappyHolder;
 
-        @Bind(R.id.iv_tappy_avatar)
+        @BindView(R.id.iv_tappy_avatar)
         ImageView tappyAvatar;
 
         boolean isRepeatedMode = false;

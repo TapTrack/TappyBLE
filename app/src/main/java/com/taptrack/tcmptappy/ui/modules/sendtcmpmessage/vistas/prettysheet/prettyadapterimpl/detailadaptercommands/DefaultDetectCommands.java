@@ -2,6 +2,7 @@ package com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.pre
 
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.commands.DetectMifareClassicCommand;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.DetectType4BCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.DetectType4Command;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.CommandItem;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.DefaultPrettySheetAdapter;
@@ -21,6 +22,8 @@ public class DefaultDetectCommands implements TimeoutCommandAdapter.TimeoutComma
                 return new DetectMifareClassicCommand((byte) timeout);
             case DefaultPrettySheetAdapter.KEY_DETECT_TYPE4:
                 return new DetectType4Command((byte) timeout);
+            case DefaultPrettySheetAdapter.KEY_DETECT_TYPE4B:
+                return new DetectType4BCommand((byte) timeout);
         }
         return null;
     }

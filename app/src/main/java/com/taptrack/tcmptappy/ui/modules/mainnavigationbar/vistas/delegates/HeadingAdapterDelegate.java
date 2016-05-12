@@ -30,7 +30,7 @@ import com.taptrack.tcmptappy.ui.modules.mainnavigationbar.vistas.WrappedNavItem
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HeadingAdapterDelegate extends AbsAdapterDelegate<List<WrappedNavItem>> {
@@ -78,7 +78,7 @@ public class HeadingAdapterDelegate extends AbsAdapterDelegate<List<WrappedNavIt
     }
 
     protected static class HeadingVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_heading)
+        @BindView(R.id.tv_heading)
         TextView captionTxt;
 
         public HeadingVH(View itemView) {

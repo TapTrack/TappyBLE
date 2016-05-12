@@ -32,7 +32,7 @@ import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TestingParsedMessageAdapter extends AbsAdapterDelegate<List<ParsedTcmpMessage>> {
@@ -60,9 +60,9 @@ public class TestingParsedMessageAdapter extends AbsAdapterDelegate<List<ParsedT
     }
 
     protected static class TestingParsedMessageVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_source)
+        @BindView(R.id.tv_source)
         TextView nameTxt;
-        @Bind(R.id.tv_message)
+        @BindView(R.id.tv_message)
         TextView msgType;
 
         View rootView;

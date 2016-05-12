@@ -34,7 +34,7 @@ import com.taptrack.tcmptappy.utils.TappyBleDeviceSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TappyBleSearchRecyclerAdapter extends RecyclerView.Adapter<TappyBleSearchRecyclerAdapter.TappyRecyclerHolder> {
@@ -156,9 +156,9 @@ public class TappyBleSearchRecyclerAdapter extends RecyclerView.Adapter<TappyBle
     }
 
     protected class TappyViewHolder extends TappyRecyclerHolder {
-        @Bind(R.id.tv_name)
+        @BindView(R.id.tv_name)
         TextView nameTextView;
-        @Bind(R.id.iv_icon)
+        @BindView(R.id.iv_icon)
         ImageView icon;
 
         TappyBleDeviceDefinition displayedTappy;

@@ -31,22 +31,22 @@ import com.taptrack.tappyble.R;
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 import com.taptrack.tcmptappy.ui.mvp.TransientStatePersistable;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CommandDetailView extends RelativeLayout implements TransientStatePersistable {
-    @Bind(R.id.vg_options_holder)
+    @BindView(R.id.vg_options_holder)
     ViewGroup optionsHolder;
-    @Bind(R.id.tv_command_description)
+    @BindView(R.id.tv_command_description)
     TextView descriptionTxt;
-    @Bind(R.id.tv_command_name)
+    @BindView(R.id.tv_command_name)
     TextView titleText;
-    @Bind(R.id.bt_send)
+    @BindView(R.id.bt_send)
     Button sendButton;
-    @Bind(R.id.bt_cancel)
+    @BindView(R.id.bt_cancel)
     Button cancelButton;
-    @Bind(R.id.v_shim)
+    @BindView(R.id.v_shim)
     View shim;
 
     boolean hasInitialized = false;

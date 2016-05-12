@@ -53,7 +53,7 @@ import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.pret
 import com.taptrack.tcmptappy.ui.mvp.BackHandler;
 import com.taptrack.tcmptappy.ui.mvp.TransientStatePersistable;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
@@ -65,20 +65,20 @@ import io.codetail.widget.RevealFrameLayout;
 @CoordinatorLayout.DefaultBehavior(PrettyCommandSheetView.Behavior.class)
 public class PrettyCommandSheetView extends RelativeLayout implements SendTcmpMessageVista, TransientStatePersistable, BackHandler {
 
-    @Bind(R.id.rv_command_family_selector)
+    @BindView(R.id.rv_command_family_selector)
     RecyclerView commandFamilySelector;
-    @Bind(R.id.rv_specific_command_selector)
+    @BindView(R.id.rv_specific_command_selector)
     RecyclerView commandSelector;
-    @Bind(R.id.v_two_level_shadow)
+    @BindView(R.id.v_two_level_shadow)
     View shadowView;
-    @Bind(R.id.fab_repeat_message)
+    @BindView(R.id.fab_repeat_message)
     FloatingActionButton repeatMessageButton;
-    @Bind(R.id.rfl_reveal_frame)
+    @BindView(R.id.rfl_reveal_frame)
     RevealFrameLayout revealFrameLayout;
-    @Bind(R.id.cdv_command_detail)
+    @BindView(R.id.cdv_command_detail)
     CommandDetailView commandDetailView;
     //this squasher is used to get around a strange bug in the design library
-    @Bind(R.id.vg_fab_squasher)
+    @BindView(R.id.vg_fab_squasher)
     ViewGroup fabSquasher;
 
     private final TimeInterpolator interpolator= new FastOutLinearInInterpolator();

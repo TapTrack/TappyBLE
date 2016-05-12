@@ -36,12 +36,12 @@ import com.taptrack.tcmptappy.ui.modules.tcmpmessagelist.vistas.rich.adapter.Tcm
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @CoordinatorLayout.DefaultBehavior(PrettySheetScrollingBehavior.class)
 public class RichTcmpMessageVista extends SwipeRefreshLayout implements DisplayTcmpMessageVista {
-    @Bind(R.id.rv_message_list)
+    @BindView(R.id.rv_message_list)
     RecyclerView messageList;
 
     private DisplayTcmpMessagePresenter presenter;

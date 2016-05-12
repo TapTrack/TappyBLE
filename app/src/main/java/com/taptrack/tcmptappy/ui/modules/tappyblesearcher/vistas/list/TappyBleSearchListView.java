@@ -35,11 +35,11 @@ import com.taptrack.tcmptappy.utils.TappyBleDeviceSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TappyBleSearchListView extends FrameLayout implements TappyBleSearchListVista {
-    @Bind(R.id.rv_recycler)
+    @BindView(R.id.rv_recycler)
     RecyclerView recyclerView;
 
     boolean isScanning;

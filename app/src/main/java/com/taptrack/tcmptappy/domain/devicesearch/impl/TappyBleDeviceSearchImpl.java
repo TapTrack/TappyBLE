@@ -30,6 +30,7 @@ import rx.Subscriber;
 import rx.functions.Action0;
 import rx.subscriptions.Subscriptions;
 
+@ApplicationScope
 public class TappyBleDeviceSearchImpl implements TappyBleDeviceSearch {
     private final TappyBleScanner scanner;
     private final Scheduler ioScheduler;
@@ -39,7 +40,6 @@ public class TappyBleDeviceSearchImpl implements TappyBleDeviceSearch {
     private final Observable<TappyBleDeviceDefinition> tappyObs;
 
     @Inject
-    @ApplicationScope
     public TappyBleDeviceSearchImpl(Scheduler ioScheduler) {
         this.ioScheduler = ioScheduler;
         scanner = TappyBleScanner.get();

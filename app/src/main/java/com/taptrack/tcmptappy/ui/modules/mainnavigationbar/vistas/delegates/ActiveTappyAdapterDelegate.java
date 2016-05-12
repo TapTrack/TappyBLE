@@ -38,7 +38,7 @@ import com.taptrack.tcmptappy.utils.TwoActionTappyListener;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ActiveTappyAdapterDelegate extends AbsAdapterDelegate<List<WrappedNavItem>> {
@@ -96,11 +96,11 @@ public class ActiveTappyAdapterDelegate extends AbsAdapterDelegate<List<WrappedN
     }
 
     protected class ActiveTappyVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_name)
+        @BindView(R.id.tv_name)
         TextView nameTxt;
-        @Bind(R.id.iv_icon)
+        @BindView(R.id.iv_icon)
         ImageView iconIv;
-        @Bind(R.id.ib_secondary_action)
+        @BindView(R.id.ib_secondary_action)
         ImageButton secondaryIb;
 
         View itemView;

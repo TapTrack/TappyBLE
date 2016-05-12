@@ -18,8 +18,11 @@ package com.taptrack.tcmptappy.domain.tappypersistence.impl;
 
 import com.pushtorefresh.storio.contentresolver.StorIOContentResolver;
 import com.pushtorefresh.storio.contentresolver.operations.delete.DeleteResult;
+import com.pushtorefresh.storio.contentresolver.operations.get.PreparedGetListOfObjects;
 import com.pushtorefresh.storio.contentresolver.operations.put.PutResult;
 import com.pushtorefresh.storio.contentresolver.queries.Query;
+import com.pushtorefresh.storio.operations.internal.MapSomethingToExecuteAsBlocking;
+import com.pushtorefresh.storio.operations.internal.OnSubscribeExecuteAsBlocking;
 import com.taptrack.tcmptappy.data.ActiveTappyDefinition;
 import com.taptrack.tcmptappy.domain.contentprovider.TappyBleDemoProvider;
 import com.taptrack.tcmptappy.domain.contentprovider.meta.ActiveTappyPersistenceContract;
@@ -29,6 +32,7 @@ import com.taptrack.tcmptappy.tappy.ble.TappyBleDeviceDefinition;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -99,20 +103,55 @@ public class ActiveTappiesImpl implements ActiveTappiesService {
 
     @Override
     public Observable<Set<TappyBleDeviceDefinition>> getActiveTappies() {
-        return resolver.get()
-                .listOfObjects(ActiveTappyDefinition.class)
-                .withQuery(Query.builder()
+        Query query = Query.builder()
                 .uri(TappyBleDemoProvider.URI_ACTIVE)
                 .columns(ActiveTappyPersistenceContract.ALL_PROJECTION)
-                .build())
-                .prepare()
-                .asRxObservable()
+                .build();
+        PreparedGetListOfObjects<ActiveTappyDefinition> prep = resolver.get()
+                .listOfObjects(ActiveTappyDefinition.class)
+                .withQuery(query)
+                .prepare();
+
+//        return Observable.just((Set<TappyBleDeviceDefinition>) new HashSet<TappyBleDeviceDefinition>(0));
+        return resolver
+                .observeChangesOfUri(query.uri()) // each change triggers executeAsBlocking
+                .map(MapSomethingToExecuteAsBlocking.newInstance(prep))
+                .startWith(Observable.create(OnSubscribeExecuteAsBlocking.newInstance(prep))) // start stream with first query result
+                .sample(100, TimeUnit.MILLISECONDS)
+                .onBackpressureLatest() // this is questionable
                 .subscribeOn(ioScheduler)
+                .flatMap(new Func1<List<ActiveTappyDefinition>, Observable<List<ActiveTappyDefinition>>>() {
+                    @Override
+                    public Observable<List<ActiveTappyDefinition>> call(List<ActiveTappyDefinition> activeTappyDefinitions) {
+                        return Observable.just(activeTappyDefinitions);
+                    }
+                })
                 .map(new Func1<List<ActiveTappyDefinition>, Set<TappyBleDeviceDefinition>>() {
                     @Override
                     public Set<TappyBleDeviceDefinition> call(List<ActiveTappyDefinition> activeTappyDefinitions) {
                         return new HashSet<TappyBleDeviceDefinition>(activeTappyDefinitions);
                     }
                 });
+//        return resolver.get()
+//                .listOfObjects(ActiveTappyDefinition.class)
+//                .withQuery(Query.builder()
+//                .uri(TappyBleDemoProvider.URI_ACTIVE)
+//                .columns(ActiveTappyPersistenceContract.ALL_PROJECTION)
+//                .build())
+//                .prepare()
+//                .asRxObservable()
+//                .flatMap(new Func1<List<ActiveTappyDefinition>, Observable<List<ActiveTappyDefinition>>>() {
+//                    @Override
+//                    public Observable<List<ActiveTappyDefinition>> call(List<ActiveTappyDefinition> activeTappyDefinitions) {
+//                        return Observable.just(activeTappyDefinitions);
+//                    }
+//                })
+//                .subscribeOn(ioScheduler)
+//                .map(new Func1<List<ActiveTappyDefinition>, Set<TappyBleDeviceDefinition>>() {
+//                    @Override
+//                    public Set<TappyBleDeviceDefinition> call(List<ActiveTappyDefinition> activeTappyDefinitions) {
+//                        return new HashSet<TappyBleDeviceDefinition>(activeTappyDefinitions);
+//                    }
+//                });
     }
 }

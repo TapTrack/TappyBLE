@@ -42,7 +42,7 @@ import com.taptrack.tcmptappy.ui.mvp.BackHandler;
 import com.taptrack.tcmptappy.ui.mvp.TransientStatePersistable;
 import com.taptrack.tcmptappy.utils.MarshmallowCompatBlePermDelegate;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InteractTappyActivity extends BaseActivity implements MainNavigationContainer {
@@ -51,24 +51,24 @@ public class InteractTappyActivity extends BaseActivity implements MainNavigatio
 
     private InteractTappyActivityBollard bollard;
 
-    @Bind(R.id.main_navigation_view)
+    @BindView(R.id.main_navigation_view)
     MainNavigationVista mainNavigationView;
 
     @Nullable
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Nullable
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    @Bind(R.id.tcmp_message_view)
+    @BindView(R.id.tcmp_message_view)
     DisplayTcmpMessageVista tcmpVista;
 
-    @Bind(R.id.bottom_command_sheet)
+    @BindView(R.id.bottom_command_sheet)
     SendTcmpMessageVista bottomSheet;
 
     private MarshmallowCompatBlePermDelegate blePermDelegate;

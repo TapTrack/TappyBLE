@@ -33,7 +33,7 @@ import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.comm
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IconOnlyAdapter extends AbsAdapterDelegate<List<CommandFamilyItem>> {
@@ -69,9 +69,9 @@ public class IconOnlyAdapter extends AbsAdapterDelegate<List<CommandFamilyItem>>
     }
 
     protected class CommandFamilyVH extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_command_family)
+        @BindView(R.id.iv_command_family)
         ImageView commandFamilyIcon;
-        @Bind(R.id.v_command_family_underline)
+        @BindView(R.id.v_command_family_underline)
         View underLineView;
 
         View itemView;
