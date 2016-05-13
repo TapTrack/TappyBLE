@@ -26,10 +26,12 @@ import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.comm
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultBasicNfcScanCommands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultDetectCommands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultNoParameterCommands;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DetectType4Commands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.NdefTextWriteCommand;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.NdefWriteUriCommand;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.ReadClassicCommandImpl;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.SendTransceiveApduCommand;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.DetectType4CommandAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.HexCommandAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.NoParameterAdapter;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadapters.ReadClassicCommandAdapter;
@@ -75,7 +77,6 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
     public static final int KEY_DETECT_TYPE4 = 13;
     public static final int KEY_TYPE4_LIBV = 14;
     public static final int KEY_TRANSCEIVE_APDU = 15;
-    public static final int KEY_DETECT_TYPE4B= 16;
 
     public DefaultPrettySheetAdapter() {
         commands = new SparseArray<>(10);
@@ -178,11 +179,6 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
                 R.string.type4command_transceive_apdu_description,
                 R.drawable.ic_compare_arrows_black_48dp));
         sortedType4Commands.add(new CommandItem(
-                KEY_DETECT_TYPE4B,
-                R.string.type4command_detect_title,
-                R.string.type4command_detect_description,
-                R.drawable.ic_nfc_black_48dp));
-        sortedType4Commands.add(new CommandItem(
                 KEY_TYPE4_LIBV,
                 R.string.type4command_get_version_title,
                 R.string.type4command_get_version_description,
@@ -237,8 +233,11 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
         if(itemId == KEY_SCAN_NDEF || itemId == KEY_SCAN_UID) {
             return new ScanCommandAdapter(new DefaultBasicNfcScanCommands(getCommandItem(itemId)));
         }
-        else if(itemId == KEY_DETECT_CLASSIC || itemId == KEY_DETECT_TYPE4 || itemId == KEY_DETECT_TYPE4B) {
+        else if(itemId == KEY_DETECT_CLASSIC) {
             return new TimeoutCommandAdapter(new DefaultDetectCommands(getCommandItem(itemId)));
+        }
+        else if (itemId == KEY_DETECT_TYPE4) {
+            return new DetectType4CommandAdapter(new DetectType4Commands(getCommandItem(itemId)));
         }
         else if (itemId == KEY_WRITE_TEXT) {
             return new TextCommandAdapter(new NdefTextWriteCommand(getCommandItem(itemId)));

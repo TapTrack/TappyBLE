@@ -67,10 +67,13 @@ import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses.Length
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses.PingResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.systemfamily.responses.SystemErrorResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.AbstractType4Message;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.DetectType4BCommand;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.DetectType4BSpecificAfiCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.DetectType4Command;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.GetType4LibraryVersionCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.commands.TransceiveApduCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.responses.APDUTransceiveSuccessfulResponse;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.responses.Type4BDetectedResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.responses.Type4DetectedResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.responses.Type4ErrorResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.type4.responses.Type4LibraryVersionResponse;
@@ -237,6 +240,29 @@ public class TcmpMessageDescriptor {
             else {
                 return String.format(ctx.getString(R.string.detect_type4_seconds),cmd.getTimeout() & 0xff);
             }
+        }
+        else if (command instanceof DetectType4BCommand) {
+            DetectType4BCommand cmd = ((DetectType4BCommand) command);
+            if(cmd.getTimeout() == 0x00) {
+                return ctx.getString(R.string.detect_type4b_indefinite);
+            }
+            else {
+                return String.format(ctx.getString(R.string.detect_type4b_seconds),cmd.getTimeout() & 0xff);
+            }
+
+        }
+        else if (command instanceof DetectType4BSpecificAfiCommand) {
+            DetectType4BSpecificAfiCommand cmd = ((DetectType4BSpecificAfiCommand) command);
+            if(cmd.getTimeout() == 0x00) {
+                return String.format(ctx.getString(R.string.detect_type4b_afi_indefinite),
+                        ByteUtils.bytesToHex(new byte[]{cmd.getAfi()}));
+            }
+            else {
+                return String.format(ctx.getString(R.string.detect_type4b_afi_seconds),
+                        cmd.getTimeout() & 0xff,
+                        ByteUtils.bytesToHex(new byte[]{cmd.getAfi()}));
+            }
+
         }
         else if (command instanceof GetType4LibraryVersionCommand) {
             return ctx.getString(R.string.get_type4_version);
@@ -427,6 +453,24 @@ public class TcmpMessageDescriptor {
             else {
                 return String.format(ctx.getString(R.string.type4_detected_no_ats),
                         ByteUtils.bytesToHex(resp.getUid()));
+            }
+        }
+        else if(response instanceof Type4BDetectedResponse) {
+            Type4BDetectedResponse resp = (Type4BDetectedResponse) response;
+            byte[] atqb = resp.getAtqb();
+            byte[] attrib = resp.getAttrib();
+            if(atqb == null || attrib == null) {
+                //this should be impossible
+                return ctx.getString(R.string.type4b_detected_nothing);
+            }
+            else if(attrib.length == 0){
+                return String.format(ctx.getString(R.string.type4b_detected_no_attrib),
+                        ByteUtils.bytesToHex(resp.getAtqb()));
+            }
+            else {
+                return String.format(ctx.getString(R.string.type4b_detected_w_attrib),
+                        ByteUtils.bytesToHex(resp.getAtqb()),
+                        ByteUtils.bytesToHex(resp.getAttrib()));
             }
         }
         else if (response instanceof Type4TimeoutResponse) {

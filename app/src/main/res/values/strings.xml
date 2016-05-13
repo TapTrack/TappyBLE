@@ -55,4 +55,6 @@
     <string name="key_b">Key B</string>
     <string name="to_inbetween_page_ranges_classic">to</string>
     <string name="read_range_label">Read pages</string>
+    <string name="modulation_mode_label">Modulation</string>
+    <string name="invalid_afi_error_message">Invalid</string>
 </resources>
