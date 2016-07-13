@@ -29,6 +29,7 @@ import com.taptrack.tcmptappy.tcmp.StandardLibraryVersionResponse;
 import com.taptrack.tcmptappy.tcmp.TCMPMessage;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.AbstractBasicNfcMessage;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.GetBasicNfcLibraryVersionCommand;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.LockTagCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.ScanNdefCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.ScanTagCommand;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.commands.StopCommand;
@@ -41,6 +42,7 @@ import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.BasicNfcLi
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.NdefFoundResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.ScanTimeoutResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.TagFoundResponse;
+import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.TagLockedResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.basicnfc.responses.TagWrittenResponse;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.AbstractMifareClassicMessage;
 import com.taptrack.tcmptappy.tcmp.commandfamilies.mifareclassic.KeySetting;
@@ -169,6 +171,15 @@ public class TcmpMessageDescriptor {
         }
         else if (command instanceof StopCommand) {
             return ctx.getString(R.string.stop_command);
+        }
+        else if (command instanceof LockTagCommand) {
+            LockTagCommand cmd = (LockTagCommand) command;
+            if(cmd.getTimeout() != 0) {
+                String form = ctx.getString(R.string.lock_tags_seconds);
+                return String.format(form, (0xff & cmd.getTimeout()));
+            } else {
+                return ctx.getString(R.string.lock_tags_indefinite);
+            }
         }
         else {
             return ctx.getString(R.string.unknown_command);
@@ -395,6 +406,12 @@ public class TcmpMessageDescriptor {
             TagWrittenResponse resp = (TagWrittenResponse) response;
             return String.format(
                     ctx.getString(R.string.tag_written_response),
+                    ByteUtils.bytesToHex(resp.getTagCode()));
+        }
+        else if(response instanceof TagLockedResponse) {
+            TagLockedResponse resp = (TagLockedResponse) response;
+            return String.format(
+                    ctx.getString(R.string.tag_locked_response),
                     ByteUtils.bytesToHex(resp.getTagCode()));
         }
         else if (response instanceof BasicNfcErrorResponse) {

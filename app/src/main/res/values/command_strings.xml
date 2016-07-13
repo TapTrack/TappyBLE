@@ -29,7 +29,7 @@
     <string name="nfccommand_get_libraryv_description">Request the version of the basic NFC library</string>
     <string name="nfccommand_scan_ndef_title">Scan NDEF</string>
     <string name="nfccommand_scan_ndef_description">Command the Tappy to scan for an NDEF-formatted tags</string>
-    <string name="nfccommand_scan_tag_title">Scan tag</string>
+    <string name="nfccommand_scan_tag_title">Scan Tag</string>
     <string name="nfccommand_scan_tag_description">Command the Tappy to scan for NFC tags</string>
     <string name="nfccommand_stop_title">Stop</string>
     <string name="nfccommand_stop_description">Command the Tappy to stop doing whatever it is doing</string>
@@ -37,6 +37,8 @@
     <string name="nfccommand_write_text_description">Command the Tappy to write text to tags</string>
     <string name="nfccommand_write_uri_title">Write Url</string>
     <string name="nfccommand_write_uri_description">Command the Tappy to write a link to tags</string>
+    <string name="nfccommand_lock_tag_title">Lock Tag</string>
+    <string name="nfccommand_lock_tag_description">Command the Tappy to lock a tag</string>
 
     <string name="classiccommand_detect_title">Detect Classic</string>
     <string name="classiccommand_detect_description">Scan for a MIFARE Classic</string>

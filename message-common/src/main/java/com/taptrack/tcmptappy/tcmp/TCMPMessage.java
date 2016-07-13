@@ -29,7 +29,7 @@ public abstract class TCMPMessage {
 
     public abstract byte[] getCommandFamily();
 
-    private  static byte[] calculateCRCBitwise(byte[] data) {
+    private static byte[] calculateCRCBitwise(byte[] data) {
         int crc = 0x6363;
         for(int i = 0; i < data.length; ++i) {
             crc = update_cr16(crc, data[i]);

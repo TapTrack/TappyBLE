@@ -27,6 +27,7 @@ import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.pret
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultDetectCommands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DefaultNoParameterCommands;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.DetectType4Commands;
+import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.LockTagCommandWrapper;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.NdefTextWriteCommand;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.NdefWriteUriCommand;
 import com.taptrack.tcmptappy.ui.modules.sendtcmpmessage.vistas.prettysheet.prettyadapterimpl.detailadaptercommands.ReadClassicCommandImpl;
@@ -69,6 +70,7 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
     public static final int KEY_WRITE_TEXT = 7;
     public static final int KEY_WRITE_URL = 8;
     public static final int KEY_STOP = 9;
+    public static final int KEY_LOCK = 16;
 
     public static final int KEY_DETECT_CLASSIC = 10;
     public static final int KEY_CLASSIC_LIBV = 11;
@@ -108,7 +110,7 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
             commands.put(commandItem.getCommandType(),commandItem);
         }
 
-        sortedBasicNfcCommands = new ArrayList<>(6);
+        sortedBasicNfcCommands = new ArrayList<>(7);
         sortedBasicNfcCommands.add(new CommandItem(
                 KEY_SCAN_NDEF,
                 R.string.nfccommand_scan_ndef_title,
@@ -134,6 +136,11 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
                 R.string.nfccommand_write_text_title,
                 R.string.nfccommand_write_text_description,
                 R.drawable.ic_description_black_48dp));
+        sortedBasicNfcCommands.add(new CommandItem(
+                KEY_LOCK,
+                R.string.nfccommand_lock_tag_title,
+                R.string.nfccommand_lock_tag_description,
+                R.drawable.ic_lock_black_48dp));
         sortedBasicNfcCommands.add(new CommandItem(
                 KEY_NFC_LIBV,
                 R.string.nfccommand_get_libraryv_title,
@@ -250,6 +257,9 @@ public class DefaultPrettySheetAdapter implements PrettySheetAdapter {
         }
         else if (itemId == KEY_READ_CLASSIC) {
             return new ReadClassicCommandAdapter(new ReadClassicCommandImpl(getCommandItem(itemId)));
+        }
+        else if (itemId == KEY_LOCK) {
+            return new TimeoutCommandAdapter(new LockTagCommandWrapper(getCommandItem(itemId)));
         }
         else {
             return new NoParameterAdapter(new DefaultNoParameterCommands(getCommandItem(itemId)));

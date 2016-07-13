@@ -143,7 +143,7 @@ ext.libraries = [
 
         // command families
         tcmpSystemCommandFamily : "com.taptrack.tcmptappy:commandfamily-system:0.8.0",
-        tcmpTappyCommandFamily : "com.taptrack.tcmptappy:commandfamily-basicnfc:0.7.1",
+        tcmpTappyCommandFamily : "com.taptrack.tcmptappy:commandfamily-basicnfc:0.8.0",
         tcmpClassicCommandFamily : "com.taptrack.tcmptappy:commandfamily-mifareclassic:0.4.0",
         tcmpType4CommandFamily : "com.taptrack.tcmptappy:commandfamily-type4:0.3.0",
 

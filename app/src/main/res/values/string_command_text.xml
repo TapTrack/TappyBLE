@@ -37,6 +37,8 @@
     <string name="write_ndef_txt_indefinite">Indefinitely attempt to write the following text to a tag: \n%1$s</string>
     <string name="write_ndef_uri_seconds">For %1$d seconds, attempt to write the following URI to a tag: \n%2$s</string>
     <string name="write_ndef_uri_indefinite">Indefinitely attempt to write the following URI to a tag: \n%1$s</string>
+    <string name="lock_tags_seconds">For %1$d seconds, attempt to lock the next tag encountered</string>
+    <string name="lock_tags_indefinite">Indefinitely attempt to lock the next tag encountered</string>
     <!-- Classic Commands -->
     <string name="detect_classic_seconds">Scan for MIFARE Classic for %1$d seconds</string>
     <string name="detect_classic_indefinite">Scan for MIFARE Classic indefinitely</string>
@@ -75,6 +77,7 @@
     <string name="scan_timeout_response">Timeout reached</string>
     <string name="tag_found_response">Tag found \nUID: %1$s\nType: %2$s</string>
     <string name="tag_written_response">Data written to tag with UID %1$s</string>
+    <string name="tag_locked_response">Tag with UID %1$s was locked</string>
     <string name="ndef_record_generic_display_format">TNF: %1$s\n Type: %2$s\n Payload: %3$s\n </string>
     <string name="ndef_record_uri_display_format">Uri: %1$s</string>
     <string name="ndef_record_text_display_format">Text: %1$s</string>
@@ -87,7 +90,7 @@
     <string name="mifareclassic_read_success">Succcessfully read MIFARE Classic\nUID: %1$s\nStart: %2$02X\nEnd: %3$02X\nData: %4$s</string>
 
     <!-- Type 4 Responses -->
-    <string name="apdu_transceive_successful">Successfully transceived APDU\nCard responded with:\n$1%s</string>
+    <string name="apdu_transceive_successful">Successfully transceived APDU\nCard responded with:\n%1$s</string>
     <string name="type4_polling_error_successful">Type 4 polling error</string>
     <string name="type4_detected_with_ats">Type 4 tag detected!\nUID: %1$s\nATS: %2$s</string>
     <string name="type4_detected_no_ats">Type 4 tag detected!\nUID: %1$s\nATS: none</string>
