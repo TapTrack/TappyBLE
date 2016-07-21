@@ -133,7 +133,7 @@ public class TcmpMessageDescriptor {
                 return String.format(form,(0xff&((ScanTagCommand) command).getTimeout()));
             }
             else {
-                return ctx.getString(R.string.scan_ndef_indefinite);
+                return ctx.getString(R.string.scan_tag_indefinitely);
             }
 
         }
