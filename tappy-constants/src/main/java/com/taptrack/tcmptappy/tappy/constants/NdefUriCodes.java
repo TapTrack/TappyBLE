@@ -46,7 +46,7 @@ public interface NdefUriCodes {
     public static final byte URICODE_BTGOEP = 0x1A;
     public static final byte URICODE_TCPOBEX = 0x1B;
     public static final byte URICODE_IRDAOBEX = 0x1C;
-    public static final byte URICODE_FILE = 0x1E;
+    public static final byte URICODE_FILE = 0x1D;
     public static final byte URICODE_URN_EPC_ID = 0x1E;
     public static final byte URICODE_URN_EPC_TAG = 0x1F;
     public static final byte URICODE_URN_EPC_PAT = 0x20;
