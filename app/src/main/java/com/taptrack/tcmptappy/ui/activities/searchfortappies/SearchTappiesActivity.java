@@ -53,8 +53,6 @@ public class SearchTappiesActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
 
-
-
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
