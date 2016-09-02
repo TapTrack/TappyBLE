@@ -45,7 +45,7 @@
     <string name="url_label">Url</string>
     <string name="url_prepopulate">http://</string>
     <string name="unsupported_url_prefix">Unsupported url prefix</string>
-    <string name="version_desc_string">Version 3.1.0</string>
+    <string name="version_desc_string">Version 3.3.2</string>
     <string name="stop_command">Stop</string>
     <string name="hex_command">Hexadecimal message</string>
     <string name="error_command_must_be_hex">Message must be a valid hexadecimal byte array</string>

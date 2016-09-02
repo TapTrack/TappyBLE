@@ -81,6 +81,7 @@ public class LollipopBleScanner extends BluetoothLeScannerCompat implements IBlu
         throwIfCallbackInUse(callback);
 
         ScanCallbackHolder holder = new ScanCallbackHolder(callback,settings,filters);
+        callbackHolderMap.put(callback,holder);
         nativeScanner.startScan(holder.getNativeFilters(), holder.getNativeScanSettings(), holder.getNativeCallback());
     }
 
