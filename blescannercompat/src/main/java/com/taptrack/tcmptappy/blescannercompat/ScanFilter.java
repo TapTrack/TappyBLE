@@ -324,7 +324,7 @@ public final class ScanFilter implements Parcelable {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(mDeviceName, mDeviceAddress, mManufacturerId, mManufacturerData,
+        return TObjects.hash(mDeviceName, mDeviceAddress, mManufacturerId, mManufacturerData,
                 mManufacturerDataMask, mServiceData, mServiceDataMask,
                 mServiceUuid, mServiceUuidMask);
     }
@@ -337,15 +337,15 @@ public final class ScanFilter implements Parcelable {
             return false;
         }
         ScanFilter other = (ScanFilter) obj;
-        return Objects.equals(mDeviceName, other.mDeviceName) &&
-                Objects.equals(mDeviceAddress, other.mDeviceAddress) &&
+        return TObjects.equals(mDeviceName, other.mDeviceName) &&
+                TObjects.equals(mDeviceAddress, other.mDeviceAddress) &&
                 mManufacturerId == other.mManufacturerId &&
-                Objects.deepEquals(mManufacturerData, other.mManufacturerData) &&
-                Objects.deepEquals(mManufacturerDataMask, other.mManufacturerDataMask) &&
-                Objects.deepEquals(mServiceData, other.mServiceData) &&
-                Objects.deepEquals(mServiceDataMask, other.mServiceDataMask) &&
-                Objects.equals(mServiceUuid, other.mServiceUuid) &&
-                Objects.equals(mServiceUuidMask, other.mServiceUuidMask);
+                TObjects.deepEquals(mManufacturerData, other.mManufacturerData) &&
+                TObjects.deepEquals(mManufacturerDataMask, other.mManufacturerDataMask) &&
+                TObjects.deepEquals(mServiceData, other.mServiceData) &&
+                TObjects.deepEquals(mServiceDataMask, other.mServiceDataMask) &&
+                TObjects.equals(mServiceUuid, other.mServiceUuid) &&
+                TObjects.equals(mServiceUuidMask, other.mServiceUuidMask);
     }
     /**
      * Builder class for {@link ScanFilter}.

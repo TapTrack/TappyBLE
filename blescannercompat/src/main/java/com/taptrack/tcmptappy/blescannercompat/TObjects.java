@@ -22,7 +22,7 @@ import java.util.Arrays;
  * Replacement for the Java 7 Utils stuff that the
  * code pulled from the AOSP uses
  */
-public class Objects {
+public class TObjects {
     public static boolean deepEquals(Object a, Object b) {
         if (a == null || b == null)
             return a == b;

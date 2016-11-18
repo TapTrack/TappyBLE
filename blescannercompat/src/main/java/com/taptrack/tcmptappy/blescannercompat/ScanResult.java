@@ -20,7 +20,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import java.util.Objects;
 /**
  * ScanResult for Bluetooth LE scan.
  */
@@ -110,7 +109,7 @@ public final class ScanResult implements Parcelable {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(mDevice, mRssi, mScanRecord, mTimestampNanos);
+        return TObjects.hash(mDevice, mRssi, mScanRecord, mTimestampNanos);
     }
     @Override
     public boolean equals(Object obj) {
@@ -121,8 +120,8 @@ public final class ScanResult implements Parcelable {
             return false;
         }
         ScanResult other = (ScanResult) obj;
-        return Objects.equals(mDevice, other.mDevice) && (mRssi == other.mRssi) &&
-                Objects.equals(mScanRecord, other.mScanRecord)
+        return TObjects.equals(mDevice, other.mDevice) && (mRssi == other.mRssi) &&
+                TObjects.equals(mScanRecord, other.mScanRecord)
                 && (mTimestampNanos == other.mTimestampNanos);
     }
     @Override

@@ -3,8 +3,9 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -22,23 +23,7 @@
             <option value="$PROJECT_DIR$/tappyble-simplemanager" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/blescannercompat" />
-            <option value="$PROJECT_DIR$/commandfamily-common" />
-            <option value="$PROJECT_DIR$/commlink-ble" />
-            <option value="$PROJECT_DIR$/commlink-common" />
-            <option value="$PROJECT_DIR$/hdlc" />
-            <option value="$PROJECT_DIR$/message-common" />
-            <option value="$PROJECT_DIR$/tappy-bledevice" />
-            <option value="$PROJECT_DIR$/tappy-constants" />
-            <option value="$PROJECT_DIR$/tappyble-scanner" />
-            <option value="$PROJECT_DIR$/tappyble-service" />
-            <option value="$PROJECT_DIR$/tappyble-simplemanager" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

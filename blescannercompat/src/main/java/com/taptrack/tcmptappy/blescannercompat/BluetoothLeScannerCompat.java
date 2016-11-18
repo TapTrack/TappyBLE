@@ -36,7 +36,7 @@ public abstract class BluetoothLeScannerCompat {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     scannerImpl = new LollipopBleScanner();
                 }
-                else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     scannerImpl = new JellybeanBleScanner();
                 }
             }

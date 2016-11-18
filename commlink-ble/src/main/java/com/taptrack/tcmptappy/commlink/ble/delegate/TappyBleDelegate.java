@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
@@ -47,6 +48,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class TappyBleDelegate {
     private static final String TAG = TappyBleDelegate.class.getName();
+    private static final UUID CLIENT_CHARACTERISTIC_CONFIG = UUID.fromString("00002902-0000-1000-8000-00805F9B34FB");
 
     private final Set<PacketListener> packetListeners
             = new CopyOnWriteArraySet<>();
@@ -244,7 +246,21 @@ public class TappyBleDelegate {
             BluetoothGattService service = bluetoothGatt.getService(serialServiceUuid);
             BluetoothGattCharacteristic charac = service.getCharacteristic(txCharacteristicUuid);
             bluetoothGatt.setCharacteristicNotification(charac, true);
-            changeState(TappyBleState.READY);
+
+            BluetoothGattDescriptor descriptor = charac.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG);
+            if(descriptor != null) {
+                descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                boolean success = bluetoothGatt.writeDescriptor(descriptor);
+                if(success) {
+                    changeState(TappyBleState.READY);
+                } else {
+                    Log.e(TAG,"Client characteristic detected, but setting it failed");
+                    changeState(TappyBleState.ERROR);
+                }
+            } else {
+                changeState(TappyBleState.READY);
+            }
+
         }
         else {
             Log.wtf(TAG,"Services detected with no gatt");

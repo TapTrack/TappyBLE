@@ -19,7 +19,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
                     android:orientation="vertical"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -61,7 +61,7 @@
                 android:padding="0dp" />
         </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
                     android:orientation="vertical"
                     android:id="@+id/rl_find_tappies"
                     android:background="?android:attr/selectableItemBackground"
@@ -104,7 +104,7 @@
                 android:padding="0dp" />
         </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
                     android:orientation="vertical"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -146,7 +146,7 @@
                 android:padding="0dp" />
         </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
                     android:orientation="vertical"
                     android:id="@+id/rl_clear_messages"
                     android:background="?android:attr/selectableItemBackground"

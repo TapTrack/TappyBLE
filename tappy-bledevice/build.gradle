@@ -24,6 +24,12 @@ android {
         minSdkVersion globalCfg.minSdkVersion
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
 }
 
 dependencies {

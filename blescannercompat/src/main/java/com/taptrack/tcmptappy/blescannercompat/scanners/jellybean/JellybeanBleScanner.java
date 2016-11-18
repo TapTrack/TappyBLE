@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 public class JellybeanBleScanner implements IBluetoothLeScanner, BluetoothAdapter.LeScanCallback {
     protected final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
