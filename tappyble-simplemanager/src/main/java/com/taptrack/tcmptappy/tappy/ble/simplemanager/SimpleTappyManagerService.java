@@ -123,7 +123,8 @@ public class SimpleTappyManagerService extends Service {
                         Bundle bundle = msg.getData();
                         ParcelableTappyBleDeviceDefinition tappy = bundle.getParcelable(KEY_DEVICE);
                         if(tappy != null) {
-                            if (service.activeDevice != null && service.activeDevice.getAddress().equals(tappy.getAddress())) {
+                            if (service.activeDevice != null &&
+                                    service.activeDevice.getAddress().equals(tappy.getAddress())) {
                                 byte[] message = bundle.getByteArray(KEY_MESSAGE_BYTES);
                                 service.newTappyMessage(message);
                                 break;
@@ -146,7 +147,9 @@ public class SimpleTappyManagerService extends Service {
                         Bundle bundle = msg.getData();
                         if(bundle != null && bundle.containsKey(KEY_ACTION)) {
                             Intent intent = new Intent(bundle.getString(KEY_ACTION));
-                            intent.putExtras(bundle.getBundle(KEY_EXTRAS));
+                            if(bundle.containsKey(KEY_EXTRAS)) {
+                                intent.putExtras(bundle.getBundle(KEY_EXTRAS));
+                            }
                             service.handleIntent(intent);
                         }
                     }
@@ -281,8 +284,12 @@ public class SimpleTappyManagerService extends Service {
         Message msg = new Message();
         msg.what = BleCommHandler.MSG_INTENT_TO_FORWARD;
         Bundle description = new Bundle();
-        description.putString(BleCommHandler.KEY_ACTION, intent.getAction());
-        description.putBundle(BleCommHandler.KEY_EXTRAS, intent.getExtras());
+        if(intent.getAction() != null) {
+            description.putString(BleCommHandler.KEY_ACTION, intent.getAction());
+        }
+        if(intent.getExtras() != null) {
+            description.putBundle(BleCommHandler.KEY_EXTRAS, intent.getExtras());
+        }
         msg.setData(description);
         handler.sendMessage(msg);
     }
