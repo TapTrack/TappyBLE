@@ -4,9 +4,9 @@ https://play.google.com/store/apps/details?id=com.taptrack.bletappyexample
 
 ## Common Gradle Dependencies
 ```groovy
-compile 'com.taptrack.tcmptappy:tappyble-scanner:0.9.1'
-compile 'com.taptrack.tcmptappy:tappyble-service:0.9.1'
-compile 'com.taptrack.tcmptappy:tappyble-simplemanager:0.9.1'
+compile 'com.taptrack.tcmptappy:tappyble-scanner:0.9.2'
+compile 'com.taptrack.tcmptappy:tappyble-service:0.9.2'
+compile 'com.taptrack.tcmptappy:tappyble-simplemanager:0.9.2'
 ```
 
 ## Documentation
