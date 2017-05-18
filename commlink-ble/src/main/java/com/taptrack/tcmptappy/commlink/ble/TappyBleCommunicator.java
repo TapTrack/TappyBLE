@@ -154,6 +154,14 @@ public class TappyBleCommunicator implements TappyBleStatusChangedListener, Pack
         }
     }
 
+    /**
+     * Register a listener to receive status updates from the BLE delegate.
+     * Note that this listener receives {@link TappyBleState} values, not
+     * {@link TappyBleDeviceStatus} values. If you want {@link TappyBleDeviceStatus}
+     * values, please call {@link TappyBleCommunicator#getState()}
+     *
+     * @param listener
+     */
     public void registerStatusChangedListener(CommunicatorStatusChangeListener listener) {
         communicatorStatusChangeListeners.add(listener);
     }
