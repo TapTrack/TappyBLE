@@ -76,72 +76,103 @@ public class TappyBleDelegate {
     private final Object receivedBufferLock = new Object();
 
     private final AtomicBoolean isSending = new AtomicBoolean(false);
+    // Whether or not we need to wait for descriptor write before going to READY
+    private boolean requiresDescriptorWrite = false;
 
     private final Handler uiThreadHandler;
 
     private BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
-                changeState(TappyBleState.CONNECTED);
-                BluetoothGatt bluetoothGatt = bluetoothGattRef.get();
-                Log.i(TAG, "Connected to GATT server.");
-                // Attempts to discover services after successful connection.
-                if(gatt != null) {
-                    Log.i(TAG, "Attempting to start service discovery:" +
-                            bluetoothGatt.discoverServices());
-                }
-                else {
-                    Log.wtf(TAG,"Somehow connected with no gatt");
-                    changeState(TappyBleState.ERROR);
-                }
+            if(gatt.getDevice().getAddress().equals(bleDeviceAddress)) {
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    changeState(TappyBleState.CONNECTED);
+                    bluetoothGattRef.compareAndSet(null,gatt);
+                    BluetoothGatt bluetoothGatt = bluetoothGattRef.get();
+                    Log.i(TAG, "Connected to GATT server.");
+                    // Attempts to discover services after successful connection.
+                    if (bluetoothGatt != null) {
+                        Log.i(TAG, "Attempting to start service discovery:" +
+                                bluetoothGatt.discoverServices());
+                    } else {
+                        Log.wtf(TAG, "Somehow connected with no gatt");
+                        changeState(TappyBleState.ERROR);
+                    }
 
-            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                changeState(TappyBleState.DISCONNECTED);
-                Log.i(TAG, "Disconnected from GATT server.");
+                } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                    changeState(TappyBleState.DISCONNECTED);
+                    Log.i(TAG, "Disconnected from GATT server.");
+                }
             }
         }
 
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             super.onServicesDiscovered(gatt, status);
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                servicesDetected();
-            } else {
-                changeState(TappyBleState.ERROR);
-                Log.w(TAG, "onServicesDiscovered received: " + status);
+            if(gatt.getDevice().getAddress().equals(bleDeviceAddress)) {
+                if (status == BluetoothGatt.GATT_SUCCESS) {
+                    servicesDetected();
+                } else {
+                    changeState(TappyBleState.ERROR);
+                    Log.w(TAG, "onServicesDiscovered received: " + status);
+                }
             }
         }
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicRead(gatt, characteristic, status);
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                characteristicRead(characteristic);
-            }
-            else if (status == BluetoothGatt.GATT_CONNECTION_CONGESTED) {
-                // not logging an error as this may self resolve
-                // probably not a good practise
-                Log.e(TAG,"GATT CNXN CONGESTED");
-            }
-            else if (status == BluetoothGatt.GATT_FAILURE) {
-                // not logging an error as this may self resolve
-                // probably not a good practise, but google is super vague
-                // about what this actually means
-                Log.e(TAG,"GATT FAILURE");
+            if(gatt.getDevice().getAddress().equals(bleDeviceAddress)) {
+                if (status == BluetoothGatt.GATT_SUCCESS) {
+                    characteristicRead(characteristic);
+                } else if (status == BluetoothGatt.GATT_CONNECTION_CONGESTED) {
+                    // not logging an error as this may self resolve
+                    // probably not a good practise
+                    Log.e(TAG, "GATT CNXN CONGESTED");
+                } else if (status == BluetoothGatt.GATT_FAILURE) {
+                    // not logging an error as this may self resolve
+                    // probably not a good practise, but google is super vague
+                    // about what this actually means
+                    Log.e(TAG, "GATT FAILURE");
+                }
             }
         }
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
-            sendBytesFromBuffer();
+            if(gatt.getDevice().getAddress().equals(bleDeviceAddress)) {
+                sendBytesFromBuffer();
+            }
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
-            characteristicRead(characteristic);
+            if(gatt.getDevice().getAddress().equals(bleDeviceAddress)) {
+                characteristicRead(characteristic);
+            }
+        }
+
+        @Override
+        public void onDescriptorWrite(BluetoothGatt gatt,
+                                      BluetoothGattDescriptor descriptor,
+                                      int status) {
+            super.onDescriptorWrite(gatt, descriptor, status);
+            if(gatt.getDevice().getAddress().equals(bleDeviceAddress)
+                    && requiresDescriptorWrite
+                    && descriptor.getUuid().equals(CLIENT_CHARACTERISTIC_CONFIG)) {
+                if(status == BluetoothGatt.GATT_SUCCESS) {
+                    conditionalChangeState(TappyBleState.READY, TappyBleState.CONNECTED);
+                } else if (status == BluetoothGatt.GATT_FAILURE ||
+                        status == BluetoothGatt.GATT_CONNECTION_CONGESTED ||
+                        status == BluetoothGatt.GATT_INSUFFICIENT_AUTHENTICATION ||
+                        status == BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION ||
+                        status == BluetoothGatt.GATT_REQUEST_NOT_SUPPORTED ||
+                        status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
+                    changeState(TappyBleState.ERROR);
+                }
+            }
         }
     };
 
@@ -231,6 +262,11 @@ public class TappyBleDelegate {
         statusListeners.remove(listener);
     }
 
+    private void conditionalChangeState(int newState, int currentState) {
+        state.compareAndSet(currentState,newState);
+        notifyStateListeners(state.get());
+    }
+
     private void changeState(int newState) {
         state.set(newState);
         notifyStateListeners(newState);
@@ -249,11 +285,10 @@ public class TappyBleDelegate {
 
             BluetoothGattDescriptor descriptor = charac.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG);
             if(descriptor != null) {
+                requiresDescriptorWrite = true;
                 descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                 boolean success = bluetoothGatt.writeDescriptor(descriptor);
-                if(success) {
-                    changeState(TappyBleState.READY);
-                } else {
+                if(!success) {
                     Log.e(TAG,"Client characteristic detected, but setting it failed");
                     changeState(TappyBleState.ERROR);
                 }
@@ -347,10 +382,9 @@ public class TappyBleDelegate {
     }
 
     public void disconnect() {
-        BluetoothAdapter bluetoothAdapter = bluetoothAdapterRef.get();
         BluetoothGatt bluetoothGatt = bluetoothGattRef.get();
-        if (bluetoothAdapter == null || bluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
+        if ( bluetoothGatt == null) {
+            Log.w(TAG, "Gatt not available to disconnect from");
             changeState(TappyBleState.ERROR);
 
             return;
@@ -370,7 +404,6 @@ public class TappyBleDelegate {
     }
 
     protected void initiateSendIfNecessary() {
-        boolean sending = isSending.get();
         if(!isSending.getAndSet(true)) {
             sendBytesFromBuffer();
         }

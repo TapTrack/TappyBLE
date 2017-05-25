@@ -68,12 +68,12 @@ public class TappyBleCommunicator implements TappyBleStatusChangedListener, Pack
         this.deviceDefinition = deviceDefinition;
     }
 
-    public void initialize() {
-        tappyBleDelegate.initialize();
+    public boolean initialize() {
+        return  tappyBleDelegate.initialize();
     }
 
-    public void connect() {
-        tappyBleDelegate.connect();
+    public boolean connect() {
+        return tappyBleDelegate.connect();
     }
 
     public void disconnect() {
@@ -156,9 +156,9 @@ public class TappyBleCommunicator implements TappyBleStatusChangedListener, Pack
 
     /**
      * Register a listener to receive status updates from the BLE delegate.
-     * Note that this listener receives {@link TappyBleState} values, not
-     * {@link TappyBleDeviceStatus} values. If you want {@link TappyBleDeviceStatus}
-     * values, please call {@link TappyBleCommunicator#getState()}
+     * Note that this listener receives {@link TappyBleDeviceStatus} values, while this
+     * class's {@link TappyBleCommunicator#onNewStatus(int)} method expects {@link TappyBleState}
+     * values
      *
      * @param listener
      */
