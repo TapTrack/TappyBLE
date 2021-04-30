@@ -1,5 +1,5 @@
-# Impending Deprecation
-This SDK will be deprecated in the near future for a new Android Tappy SDK that supports both TappyUSB and TappyBLE readers while offering a simplified API. The new version 4.x.x Tappy demo app now in the [Play Store](https://play.google.com/store/apps/details?id=com.taptrack.bletappyexample) is part of this SDK, so the app found in this repository will not match up with what you see currently published. If you are starting a new Android project using the Tappy, it is advisable to base it on the new beta SDK found at [https://github.com/TapTrack/TCMPTappy-Android](https://github.com/TapTrack/TCMPTappy-Android).
+# Deprecated
+This SDK is deprecated in favour of a new new Android Tappy SDK that supports both TappyUSB and TappyBLE readers while offering a simplified API. The new version 4.x.x Tappy demo app now in the [Play Store](https://play.google.com/store/apps/details?id=com.taptrack.bletappyexample) is part of this SDK, so the app found in this repository will not match up with what you see currently published. If you are starting a new Android project using the Tappy, it is advisable to base it on the new beta SDK found at [https://github.com/TapTrack/TCMPTappy-Android](https://github.com/TapTrack/TCMPTappy-Android).
 
 # Taptrack Tappy BLE SDK
 This project provides a standard SDK for interfacing with a TapTrack TappyBLE NFC reader. The 'app' module contains the source for the version 3.x.x editions of the TappyBLE example app found at 
